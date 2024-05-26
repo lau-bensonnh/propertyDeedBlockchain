@@ -3,13 +3,11 @@ info:
   title: API
   version: "1.0"
   description: |-
-    Issue, hold, transfer and redeem tokens. Backed by a distributed ledger,
-    preserving privacy using Zero Knowledge Proofs. This API definition fronts 4 different services, which each play a different
-    role in the ecosystem. 
+    - The api is secured by an api key.
+    - The api is for the land department to manage the assets and their transactions.
+    - The api is also used by 3rd party to submit transactions and incumbrances.
+    - The api is also used by the operations team to check the health of the service.
 
-    To try it out, let the Issuer issue some funds to one of the users. Watch the balances
-    get updated and see the transaction history. Transfer it to another account, or redeem
-    the tokens to destroy them.
 servers:
   - url: http://localhost:3000/api/
     description: server
@@ -40,7 +38,7 @@ paths:
         default:
           $ref: "#/components/responses/ErrorResponse"
 
-      summary: Get an account and their balance of a certain type
+      summary: Get all assets for testing
 
   /land/assets/list:
     post:
@@ -59,7 +57,7 @@ paths:
         default:
           $ref: "#/components/responses/ErrorResponse"
 
-      summary: Get an account and their balance of a certain type
+      summary: Get all assets
 
   /land/assets/find:
     post:
@@ -79,7 +77,7 @@ paths:
           $ref: "#/components/responses/ListSuccess"
         default:
           $ref: "#/components/responses/ErrorResponse"
-      summary: Get an account and their balance of a certain type
+      summary: Find all assets by address or property reference number
 
   /land/assets/get/{id}:
     post:
@@ -95,7 +93,7 @@ paths:
           $ref: "#/components/responses/GetAssetWithDetailSuccess"
         default:
           $ref: "#/components/responses/ErrorResponse"
-      summary: Get an account and their balance of a certain type
+      summary: Get an asset by id
   /land/assets/history/{id}:
     post:
       tags:
@@ -110,7 +108,7 @@ paths:
           $ref: "#/components/responses/GetAssetWithDetailSuccess"
         default:
           $ref: "#/components/responses/ErrorResponse"
-      summary: Get an account and their balance of a certain type
+      summary: Get an asset by id with history
   /land/assets/create:
     post:
       tags:
@@ -119,7 +117,7 @@ paths:
         - X-Api-Key: []
       parameters:
         - $ref: "#/components/parameters/id"
-      summary: Get all transactions for an account
+      summary: create an asset
       responses:
         "200":
           $ref: "#/components/responses/SuccessResponse"
@@ -133,7 +131,7 @@ paths:
         - X-Api-Key: []
       parameters:
         - $ref: "#/components/parameters/id"
-      summary: Get all transactions for an account
+      summary: import an asset
       responses:
         "200":
           $ref: "#/components/responses/SuccessResponse"
@@ -147,7 +145,7 @@ paths:
         - X-Api-Key: []
       parameters:
         - $ref: "#/components/parameters/id"
-      summary: Get all transactions for an account
+      summary: update an asset with land info
       responses:
         "200":
           $ref: "#/components/responses/SuccessResponse"
@@ -161,7 +159,7 @@ paths:
         - X-Api-Key: []
       parameters:
         - $ref: "#/components/parameters/id"
-      summary: Get all transactions for an account
+      summary: delete an asset
       responses:
         "200":
           $ref: "#/components/responses/SuccessResponse"
@@ -176,7 +174,7 @@ paths:
         - X-Api-Key: []
       parameters:
         - $ref: "#/components/parameters/id"
-      summary: Get all transactions for an account
+      summary: lock/freeze the access
       responses:
         "200":
           $ref: "#/components/responses/SuccessResponse"
@@ -191,7 +189,7 @@ paths:
         - X-Api-Key: []
       parameters:
         - $ref: "#/components/parameters/id"
-      summary: Get all transactions for an account
+      summary: unlock the access
       responses:
         "200":
           $ref: "#/components/responses/SuccessResponse"
@@ -205,7 +203,7 @@ paths:
         - X-Api-Key: []
       parameters:
         - $ref: "#/components/parameters/id"
-      summary: Get all transactions for an account
+      summary: Approve transaction changes with asset id and record index
       responses:
         "200":
           $ref: "#/components/responses/SuccessResponse"
@@ -219,7 +217,7 @@ paths:
         - X-Api-Key: []
       parameters:
         - $ref: "#/components/parameters/id"
-      summary: Get all transactions for an account
+      summary: Reject transaction changes with asset id and record index
       responses:
         "200":
           $ref: "#/components/responses/SuccessResponse"
@@ -233,7 +231,7 @@ paths:
         - X-Api-Key: []
       parameters:
         - $ref: "#/components/parameters/id"
-      summary: Get all transactions for an account
+      summary: Approve incumbrance changes with asset id and record index
       responses:
         "200":
           $ref: "#/components/responses/SuccessResponse"
@@ -247,7 +245,7 @@ paths:
         - X-Api-Key: []
       parameters:
         - $ref: "#/components/parameters/id"
-      summary: Get all transactions for an account
+      summary: Reject incumbrance changes with asset id and record index
       responses:
         "200":
           $ref: "#/components/responses/SuccessResponse"
@@ -268,7 +266,7 @@ paths:
           $ref: "#/components/responses/ListSuccess"
         default:
           $ref: "#/components/responses/ErrorResponse"
-      summary: Get an account and their balance of a certain type
+      summary: Find all assets by address or property reference number
 
   /3rdParty/assets/get/{id}:
     post:
@@ -281,7 +279,7 @@ paths:
           $ref: "#/components/responses/GetAssetWithDetailSuccess"
         default:
           $ref: "#/components/responses/ErrorResponse"
-      summary: Get all accounts on this node and their balances of each type
+      summary: Get an asset by id
   /3rdParty/assets/transaction/submit/{id}:
     post:
       tags:
@@ -293,7 +291,7 @@ paths:
           $ref: "#/components/responses/SuccessResponse"
         default:
           $ref: "#/components/responses/ErrorResponse"
-      summary: Get all accounts on this node and their balances of each type
+      summary: submit a transaction for an asset
   /3rdParty/assets/incumbrance/submit/{id}:
     post:
       tags:
@@ -305,7 +303,7 @@ paths:
           $ref: "#/components/responses/SuccessResponse"
         default:
           $ref: "#/components/responses/ErrorResponse"
-      summary: Get all accounts on this node and their balances of each type
+      summary: submit an incumbrance for an asset
 
   # Operations
   /healthz:
@@ -397,21 +395,21 @@ components:
   schemas:
     SimpleAsset:
       type: object
-      description: Information about an account and its balance
+      description: Information about simple asset
       required:
         - id
         - propertyReferenceNumber
       properties:
         id:
           type: string
-          description: account id as registered at the Certificate Authority
+          description: id for the asset
           example: alice
         propertyReferenceNumber:
           type: string
           description: the property reference number
         propertyHeldInfos:
           type: array
-          description: balance in base units for each currency
+          description: the property held info
           items:
             $ref: "#/components/schemas/PropertyHeldInfo"
         propertyAddress:
@@ -433,37 +431,37 @@ components:
         propertyChineseAddress: "chinese address"
     Asset:
       type: object
-      description: Information about an account and its balance
+      description: Information about asset
       required:
         - id
         - propertyReferenceNumber
       properties:
         id:
           type: string
-          description: account id as registered at the Certificate Authority
+          description: id for the asset
           example: alice
         version:
           type: string
-          description: the property reference number
+          description: version of the asset
         createdAt:
           type: string
-          description: balance in base units for each currency
+          description: the create time of the asset
         updatedAt:
           type: string
-          description: the property address
+          description: the update time of the asset
         createdMethod:
           type: string
-          description: the property chinese address
+          description: the create method of the asset
         propertyStatus:
           type: string
-          description: the property chinese address
+          description: the property status
 
         propertyReferenceNumber:
           type: string
           description: the property reference number
         propertyHeldInfos:
           type: array
-          description: balance in base units for each currency
+          description: the property held info
           items:
             $ref: "#/components/schemas/PropertyHeldInfo"
         propertyAddress:
@@ -474,45 +472,45 @@ components:
           description: the property chinese address
         propertyShareOfTheLocation:
           type: string
-          description: the property chinese address
+          description: the property share of the location
         propertyRemarks:
           type: array
-          description: balance in base units for each currency
+          description: the property remarks
           items:
             type: string
         transactionHistory:
           type: array
-          description: balance in base units for each currency
+          description: the transaction history
           items:
             $ref: "#/components/schemas/OwnerTransactionInfo"
         deedsPendingRegistration:
           type: array
-          description: balance in base units for each currency
+          description: the deeds pending registration
           items:
             $ref: "#/components/schemas/OwnerTransactionInfo"
         deedsPendingRegistrationRejected:
           type: array
-          description: balance in base units for each currency
+          description: the deeds pending registration rejected
           items:
             $ref: "#/components/schemas/OwnerTransactionInfo"
         incumbranceHistory:
           type: array
-          description: balance in base units for each currency
+          description: the incumbrance history
           items:
             $ref: "#/components/schemas/IncumbrancesInfo"
         incumbrancePendingRegistration:
           type: array
-          description: balance in base units for each currency
+          description: the incumbrance pending registration
           items:
             $ref: "#/components/schemas/IncumbrancesInfo"
         incumbrancePendingRegistrationRejected:
           type: array
-          description: balance in base units for each currency
+          description: the incumbrance pending registration rejected
           items:
             $ref: "#/components/schemas/IncumbrancesInfo"
     PropertyHeldInfo:
       type: object
-      description: Information about an account and its balance
+      description: Information about  property held info
       required:
         - locationNumber
         - heldUnder
@@ -522,20 +520,19 @@ components:
       properties:
         locationNumber:
           type: string
-          description: account id as registered at the Certificate Authority
-          example: alice
+          description: location number
         heldUnder:
           type: string
-          description: the property reference number
+          description: held under
         leaseTerm:
           type: string
-          description: balance in base units for each currency
+          description: lease term
         commencementOfLeaseTerm:
           type: string
-          description: the property address
+          description: commencement of lease term
         rentPerAnnum:
           type: string
-          description: the property chinese address
+          description: rent per annum
       example:
         locationNumber: 1
         heldUnder: "PRN-001"
@@ -544,24 +541,24 @@ components:
         rentPerAnnum: ""
     OwnerInfo:
       type: object
-      description: Information about an account and its balance
+      description: Information about an  owner
       required:
         - nameOfOwner
         - capacity
       properties:
         nameOfOwner:
           type: string
-          description: account id as registered at the Certificate Authority
+          description: name of the owner
           example: alice
         capacity:
           type: string
-          description: the property reference number
+          description: capacity
       example:
         nameOfOwner: "alice"
         capacity: "all"
     OwnerTransactionInfo:
       type: object
-      description: Information about an account and its balance
+      description: Information about an owner transaction
       required:
         - owners
         - memorialNumber
@@ -572,33 +569,33 @@ components:
       properties:
         owners:
           type: array
-          description: account id as registered at the Certificate Authority
+          description: owner info
           items:
             $ref: "#/components/schemas/OwnerInfo"
         memorialNumber:
           type: string
-          description: account id as registered at the Certificate Authority
+          description: memorial number
           example: memorialNumber
         dateOfInstrument:
           type: string
-          description: the property reference number
+          description: date of instrument
           example: dateOfInstrument
         dateOfRegistration:
           type: string
-          description: balance in base units for each currency
+          description: date of registration
           example: dateOfRegistration
         consideration:
           type: string
-          description: the property address
+          description: consideration
           example: consideration
         remarks:
           type: string
-          description: the property chinese address
+          description: remarks
           example: remarks field
 
     IncumbrancesInfo:
       type: object
-      description: Information about an account and its balance
+      description: Information about an incumbrance
       required:
         - memorialNumber
         - dateOfInstrument
@@ -610,36 +607,36 @@ components:
       properties:
         owners:
           type: array
-          description: account id as registered at the Certificate Authority
+          description: owner info
           items:
             $ref: "#/components/schemas/OwnerInfo"
         memorialNumber:
           type: string
-          description: account id as registered at the Certificate Authority
+          description: memorial number
           example: memorialNumber
         dateOfInstrument:
           type: string
-          description: the property reference number
+          description: date of instrument
           example: dateOfInstrument
         dateOfRegistration:
           type: string
-          description: balance in base units for each currency
+          description: date of registration
           example: dateOfRegistration
         natureOfIncumbrances:
           type: string
-          description: the property address
+          description: nature of incumbrances
           example: natureOfIncumbrances
         inFavourOf:
           type: string
-          description: the property address
+          description: in favour of
           example: inFavourOf
         consideration:
           type: string
-          description: the property address
+          description: consideration
           example: consideration
         remarks:
           type: string
-          description: the property chinese address
+          description: remarks
           example: remarks field
 
     Success:
@@ -653,14 +650,14 @@ components:
           description: High level success message
           type: string
         payload:
-          description: Details about the data (object/json/string)
-          type: string
+          description: Details about the data (object)
+          type: object
         id:
           description: Details about the id
           type: string
       example:
         message: success message
-        payload: "{}"
+        payload: {}
         id: "asset_id"
     Error:
       required:
@@ -681,41 +678,41 @@ components:
     id:
       name: id
       schema:
-        example: asset id
         description: asset id
         type: string
+        example: asset id
       in: path
       required: true
     limit:
       name: limit
       in: query
       schema:
-        example: 10
         description: limit
         type: number
+        example: 10
       required: true
     offset:
       name: offset
       in: query
       required: true
       schema:
-        example: 0
         description: offset
         type: number
+        example: 0
     propertyReferenceNumber:
       name: propertyReferenceNumber
       in: query
       schema:
-        example: "PRN-001"
         description: The Property Reference Number
         type: string
+        example: "PRN-001"
     address:
       name: address
       in: query
       schema:
-        example: "address"
         description: The address of the property
         type: string
+        example: "address"
   securitySchemes:
     X-Api-Key:
       type: apiKey
