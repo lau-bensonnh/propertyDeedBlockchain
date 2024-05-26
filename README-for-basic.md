@@ -6,21 +6,21 @@ copy applicaion-gateway , chaincode
 cat ~/.zshrc
 
 ```
-export PATH=/Users/hin/go/src/github.com/tszhin/fabric-samples/bin:$PATH
-export TEST_NETWORK_HOME=/Users/hin/go/src/github.com/tszhin/propertyDeedBlockchain/test-network
-export PATH=/Users/hin/go/bin:$PATH
+export PATH=~/go/src/github.com/tszhin/fabric-samples/bin:$PATH
+export TEST_NETWORK_HOME=~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/test-network
+export PATH=~/go/bin:$PATH
 ```
 
 ## Part 0: 2. optional(log)
 
-cd /Users/hin/go/src/github.com/tszhin/propertyDeedBlockchain/test-network
+cd ~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/test-network
 ./monitordocker.sh fabric_test
 
 ## Part 1. start network and apply the chaincode
 
 <!-- ccn = CC_NAME  , ccep = CC_END_POLICY , CCCG = CC_COLL_CONFIG  -->
 
-cd /Users/hin/go/src/github.com/tszhin/propertyDeedBlockchain/test-network
+cd ~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/test-network
 ./network.sh up
 ./network.sh up createChannel -c mychannel -ca
 ./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-typescript/ -ccl typescript
@@ -29,14 +29,14 @@ cd /Users/hin/go/src/github.com/tszhin/propertyDeedBlockchain/test-network
 
 ## run in basic data (part 2)
 
-cd /Users/hin/go/src/github.com/tszhin/propertyDeedBlockchain/asset-transfer-basic/application-gateway-typescript
+cd ~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/asset-transfer-basic/application-gateway-typescript
 npm start
 
 ## part 3 , run in rest api
 
-export TEST_NETWORK_HOME=/Users/hin/go/src/github.com/tszhin/propertyDeedBlockchain/test-network
+export TEST_NETWORK_HOME=~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/test-network
 export REDIS_PASSWORD=$(uuidgen)
-cd /Users/hin/go/src/github.com/tszhin/propertyDeedBlockchain/asset-transfer-basic/rest-api-typescript
+cd ~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/asset-transfer-basic/rest-api-typescript
 
 <!-- install -->
 
@@ -49,8 +49,9 @@ npm run start:dev
 
 ## part 4 test api call
 
-cd /Users/hin/go/src/github.com/tszhin/propertyDeedBlockchain/asset-transfer-basic/rest-api-typescript
+cd ~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/asset-transfer-basic/rest-api-typescript
 SAMPLE_APIKEY=$(grep ORG1_APIKEY .env | cut -d '=' -f 2-)
+echo $SAMPLE_APIKEY
 curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3000/api/assets
 curl --include --header "X-Api-Key: ${SAMPLE_APIKEY}" --request OPTIONS http://localhost:3000/api/assets/asset7
 curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request POST --data '{"ID":"asset7","Color":"red","Size":42,"Owner":"Jean","AppraisedValue":101}' http://localhost:3000/api/assets
