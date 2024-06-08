@@ -57,7 +57,7 @@
     "clean": "rimraf ./dist",
     "format": "prettier --write \"{src,test}/**/*.ts\"",
     "generateEnv": "./scripts/generateEnv.sh",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext .ts --fix",
     "start": "node --require source-map-support/register ./dist",
     "start:dotenv": "node --require source-map-support/register --require dotenv/config ./dist",
     "start:dev": "node --require source-map-support/register --require dotenv/config ./dist | pino-pretty",

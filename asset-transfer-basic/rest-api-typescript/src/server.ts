@@ -8,6 +8,8 @@ import { getReasonPhrase, StatusCodes } from 'http-status-codes';
 import passport from 'passport';
 import pinoMiddleware from 'pino-http';
 import { assetsRouter } from './assets.router';
+import { landAssetsRouter } from './landAssets.router';
+import { thirdPartyAssetsRouter } from './thirdPartyAssets.router';
 import { authenticateApiKey, fabricAPIKeyStrategy } from './auth';
 import { healthRouter } from './health.router';
 import { jobsRouter } from './jobs.router';
@@ -66,6 +68,8 @@ export const createServer = async (): Promise<Application> => {
   }
 
   app.use('/', healthRouter);
+  app.use('/api/land/assets', authenticateApiKey, landAssetsRouter);
+  app.use('/api/3rdParty/assets', authenticateApiKey, thirdPartyAssetsRouter);
   app.use('/api/assets', authenticateApiKey, assetsRouter);
   app.use('/api/jobs', authenticateApiKey, jobsRouter);
   app.use('/api/transactions', authenticateApiKey, transactionsRouter);

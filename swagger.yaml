@@ -24,7 +24,7 @@ paths:
   /assets:
     get:
       tags:
-        - land dept
+        - comming soon
       security:
         - X-Api-Key: []
       parameters:
@@ -40,6 +40,19 @@ paths:
 
       summary: Get all assets for testing
 
+  /land/assets/getSummary:
+    post:
+      tags:
+        - land dept
+      security:
+        - X-Api-Key: []
+      responses:
+        "200":
+          $ref: "#/components/responses/ListSuccess"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+      summary: Get all assets
   /land/assets/list:
     post:
       tags:
@@ -97,7 +110,7 @@ paths:
   /land/assets/history/{id}:
     post:
       tags:
-        - land dept
+        - comming soon
       security:
         - X-Api-Key: []
       parameters:
@@ -169,7 +182,7 @@ paths:
   /land/assets/lock/{id}:
     post:
       tags:
-        - land dept
+        - comming soon
       security:
         - X-Api-Key: []
       parameters:
@@ -184,7 +197,7 @@ paths:
   /land/assets/unlock/{id}:
     post:
       tags:
-        - land dept
+        - comming soon
       security:
         - X-Api-Key: []
       parameters:
