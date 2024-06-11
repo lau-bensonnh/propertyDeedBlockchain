@@ -52,6 +52,9 @@ npm run start:dev
 cd ~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/asset-transfer-basic/rest-api-typescript
 SAMPLE_APIKEY=$(grep ORG1_APIKEY .env | cut -d '=' -f 2-)
 echo $SAMPLE_APIKEY
+curl --header "X-Api-Key: ${SAMPLE_APIKEY}" -X POST http://localhost:3000/api/land/assets/getSummary
+curl --header "X-Api-Key: ${SAMPLE_APIKEY}" -X POST http://localhost:3000/api/land/assets/get/asset1000001
+
 curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3000/api/assets
 curl --include --header "X-Api-Key: ${SAMPLE_APIKEY}" --request OPTIONS http://localhost:3000/api/assets/asset7
 curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request POST --data '{"ID":"asset7","Color":"red","Size":42,"Owner":"Jean","AppraisedValue":101}' http://localhost:3000/api/assets

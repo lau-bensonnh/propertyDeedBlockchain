@@ -28,17 +28,10 @@ export const isMaxmemoryPolicyNoeviction = async (): Promise<boolean> => {
   try {
     redis = new IORedis(redisOptions);
 
-    const maxmemoryPolicyConfig = await (redis as Redis).config(
-      'GET',
-      'maxmemory-policy'
-    );
+    const maxmemoryPolicyConfig = await (redis as Redis).config('GET', 'maxmemory-policy');
     logger.debug({ maxmemoryPolicyConfig }, 'Got maxmemory-policy config');
 
-    if (
-      maxmemoryPolicyConfig.length == 2 &&
-      'maxmemory-policy' === maxmemoryPolicyConfig[0] &&
-      'noeviction' === maxmemoryPolicyConfig[1]
-    ) {
+    if (maxmemoryPolicyConfig.length == 2 && 'maxmemory-policy' === maxmemoryPolicyConfig[0] && 'noeviction' === maxmemoryPolicyConfig[1]) {
       return true;
     }
   } finally {

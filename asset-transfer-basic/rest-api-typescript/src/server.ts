@@ -26,10 +26,7 @@ export const createServer = async (): Promise<Application> => {
     pinoMiddleware({
       logger,
       customLogLevel: function customLogLevel(res, err) {
-        if (
-          res.statusCode >= BAD_REQUEST &&
-          res.statusCode < INTERNAL_SERVER_ERROR
-        ) {
+        if (res.statusCode >= BAD_REQUEST && res.statusCode < INTERNAL_SERVER_ERROR) {
           return 'warn';
         }
 

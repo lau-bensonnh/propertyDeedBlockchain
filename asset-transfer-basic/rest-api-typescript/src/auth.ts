@@ -11,32 +11,23 @@ import * as config from './config';
 
 const { UNAUTHORIZED } = StatusCodes;
 
-export const fabricAPIKeyStrategy: HeaderAPIKeyStrategy =
-  new HeaderAPIKeyStrategy(
-    { header: 'X-API-Key', prefix: '' },
-    false,
-    function (apikey, done) {
-      logger.debug({ apikey }, 'Checking X-API-Key');
-      if (apikey === config.org1ApiKey) {
-        const user = config.mspIdOrg1;
-        logger.debug('User set to %s', user);
-        done(null, user);
-      } else if (apikey === config.org2ApiKey) {
-        const user = config.mspIdOrg2;
-        logger.debug('User set to %s', user);
-        done(null, user);
-      } else {
-        logger.debug({ apikey }, 'No valid X-API-Key');
-        return done(null, false);
-      }
-    }
-  );
+export const fabricAPIKeyStrategy: HeaderAPIKeyStrategy = new HeaderAPIKeyStrategy({ header: 'X-API-Key', prefix: '' }, false, function (apikey, done) {
+  logger.debug({ apikey }, 'Checking X-API-Key');
+  if (apikey === config.org1ApiKey) {
+    const user = config.mspIdOrg1;
+    logger.debug('User set to %s', user);
+    done(null, user);
+  } else if (apikey === config.org2ApiKey) {
+    const user = config.mspIdOrg2;
+    logger.debug('User set to %s', user);
+    done(null, user);
+  } else {
+    logger.debug({ apikey }, 'No valid X-API-Key');
+    return done(null, false);
+  }
+});
 
-export const authenticateApiKey = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void => {
+export const authenticateApiKey = (req: Request, res: Response, next: NextFunction): void => {
   passport.authenticate(
     'headerapikey',
     { session: false },

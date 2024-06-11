@@ -109,19 +109,12 @@ export const initJobQueueWorker = (app: Application): Worker => {
  *
  * The job will be retried if this function throws an error
  */
-export const processSubmitTransactionJob = async (
-  app: Application,
-  job: Job<JobData, JobResult>
-): Promise<JobResult> => {
+export const processSubmitTransactionJob = async (app: Application, job: Job<JobData, JobResult>): Promise<JobResult> => {
   logger.debug({ jobId: job.id, jobName: job.name }, 'Processing job');
 
   const contract = app.locals[job.data.mspid]?.assetContract as Contract;
   if (contract === undefined) {
-    logger.error(
-      { jobId: job.id, jobName: job.name },
-      'Contract not found for MSP ID %s',
-      job.data.mspid
-    );
+    logger.error({ jobId: job.id, jobName: job.name }, 'Contract not found for MSP ID %s', job.data.mspid);
 
     // Retrying will never work without a contract, so give up with an
     // empty job result
@@ -179,10 +172,7 @@ export const processSubmitTransactionJob = async (
     const retryAction = getRetryAction(err);
 
     if (retryAction === RetryAction.None) {
-      logger.error(
-        { jobId: job.id, jobName: job.name, err },
-        'Fatal transaction error occurred'
-      );
+      logger.error({ jobId: job.id, jobName: job.name, err }, 'Fatal transaction error occurred');
 
       // Not retriable so return a job result with the error details
       return {
@@ -191,16 +181,10 @@ export const processSubmitTransactionJob = async (
       };
     }
 
-    logger.warn(
-      { jobId: job.id, jobName: job.name, err },
-      'Retryable transaction error occurred'
-    );
+    logger.warn({ jobId: job.id, jobName: job.name, err }, 'Retryable transaction error occurred');
 
     if (retryAction === RetryAction.WithNewTransactionId) {
-      logger.debug(
-        { jobId: job.id, jobName: job.name },
-        'Clearing saved transaction state'
-      );
+      logger.debug({ jobId: job.id, jobName: job.name }, 'Clearing saved transaction state');
       await updateJobData(job, undefined);
     }
 
@@ -229,12 +213,7 @@ export const initJobQueueScheduler = (): QueueScheduler => {
 /**
  * Helper to add a new submit transaction job to the queue
  */
-export const addSubmitTransactionJob = async (
-  submitQueue: Queue<JobData, JobResult>,
-  mspid: string,
-  transactionName: string,
-  ...transactionArgs: string[]
-): Promise<string> => {
+export const addSubmitTransactionJob = async (submitQueue: Queue<JobData, JobResult>, mspid: string, transactionName: string, ...transactionArgs: string[]): Promise<string> => {
   const jobName = `submit ${transactionName} transaction`;
   const job = await submitQueue.add(jobName, {
     mspid,
@@ -253,17 +232,11 @@ export const addSubmitTransactionJob = async (
 /**
  * Helper to update the data for an existing job
  */
-export const updateJobData = async (
-  job: Job<JobData, JobResult>,
-  transaction: Transaction | undefined
-): Promise<void> => {
+export const updateJobData = async (job: Job<JobData, JobResult>, transaction: Transaction | undefined): Promise<void> => {
   const newData = { ...job.data };
 
   if (transaction != undefined) {
-    const transationIds = ([] as string[]).concat(
-      newData.transactionIds,
-      transaction.getTransactionId()
-    );
+    const transationIds = ([] as string[]).concat(newData.transactionIds, transaction.getTransactionId());
     newData.transactionIds = transationIds;
 
     newData.transactionState = transaction.serialize();
@@ -279,10 +252,7 @@ export const updateJobData = async (
  *
  * This function is used for the jobs REST endpoint
  */
-export const getJobSummary = async (
-  queue: Queue,
-  jobId: string
-): Promise<JobSummary> => {
+export const getJobSummary = async (queue: Queue, jobId: string): Promise<JobSummary> => {
   const job: Job<JobData, JobResult> | undefined = await queue.getJob(jobId);
   logger.debug({ job }, 'Got job');
 
@@ -305,10 +275,7 @@ export const getJobSummary = async (
       transactionError = returnValue.transactionError;
     }
 
-    if (
-      returnValue.transactionPayload &&
-      returnValue.transactionPayload.length > 0
-    ) {
+    if (returnValue.transactionPayload && returnValue.transactionPayload.length > 0) {
       transactionPayload = returnValue.transactionPayload.toString();
     } else {
       transactionPayload = '';
@@ -330,16 +297,8 @@ export const getJobSummary = async (
  *
  * This function is used for the liveness REST endpoint
  */
-export const getJobCounts = async (
-  queue: Queue
-): Promise<{ [index: string]: number }> => {
-  const jobCounts = await queue.getJobCounts(
-    'active',
-    'completed',
-    'delayed',
-    'failed',
-    'waiting'
-  );
+export const getJobCounts = async (queue: Queue): Promise<{ [index: string]: number }> => {
+  const jobCounts = await queue.getJobCounts('active', 'completed', 'delayed', 'failed', 'waiting');
   logger.debug({ jobCounts }, 'Current job counts');
 
   return jobCounts;

@@ -121,8 +121,7 @@ export const isErrorLike = (err: unknown): err is Error => {
     err != null &&
     typeof (err as Error).name === 'string' &&
     typeof (err as Error).message === 'string' &&
-    ((err as Error).stack === undefined ||
-      typeof (err as Error).stack === 'string')
+    ((err as Error).stack === undefined || typeof (err as Error).stack === 'string')
   );
 };
 
@@ -140,8 +139,7 @@ export const isDuplicateTransactionError = (err: unknown): boolean => {
   if (typeof (err as TransactionError).transactionCode === 'string') {
     // Checking whether a commit failure is caused by a duplicate transaction
     // is straightforward because the transaction code should be available
-    isDuplicate =
-      (err as TransactionError).transactionCode === 'DUPLICATE_TXID';
+    isDuplicate = (err as TransactionError).transactionCode === 'DUPLICATE_TXID';
   } else {
     // Checking whether an endorsement failure is caused by a duplicate
     // transaction is only possible by processing error strings, which is not ideal.
@@ -149,11 +147,7 @@ export const isDuplicateTransactionError = (err: unknown): boolean => {
       errors: { endorsements: { details: string }[] }[];
     };
 
-    isDuplicate = endorsementError?.errors?.some((err) =>
-      err?.endorsements?.some((endorsement) =>
-        endorsement?.details?.startsWith('duplicate transaction found')
-      )
-    );
+    isDuplicate = endorsementError?.errors?.some((err) => err?.endorsements?.some((endorsement) => endorsement?.details?.startsWith('duplicate transaction found')));
   }
 
   return isDuplicate === true;
@@ -170,10 +164,7 @@ export const isDuplicateTransactionError = (err: unknown): boolean => {
 const matchAssetAlreadyExistsMessage = (message: string): string | null => {
   const assetAlreadyExistsRegex = /([tT]he )?[aA]sset \w* already exists/g;
   const assetAlreadyExistsMatch = message.match(assetAlreadyExistsRegex);
-  logger.debug(
-    { message: message, result: assetAlreadyExistsMatch },
-    'Checking for asset already exists message'
-  );
+  logger.debug({ message: message, result: assetAlreadyExistsMatch }, 'Checking for asset already exists message');
 
   if (assetAlreadyExistsMatch !== null) {
     return assetAlreadyExistsMatch[0];
@@ -193,10 +184,7 @@ const matchAssetAlreadyExistsMessage = (message: string): string | null => {
 const matchAssetDoesNotExistMessage = (message: string): string | null => {
   const assetDoesNotExistRegex = /([tT]he )?[aA]sset \w* does not exist/g;
   const assetDoesNotExistMatch = message.match(assetDoesNotExistRegex);
-  logger.debug(
-    { message: message, result: assetDoesNotExistMatch },
-    'Checking for asset does not exist message'
-  );
+  logger.debug({ message: message, result: assetDoesNotExistMatch }, 'Checking for asset does not exist message');
 
   if (assetDoesNotExistMatch !== null) {
     return assetDoesNotExistMatch[0];
@@ -212,18 +200,10 @@ const matchAssetDoesNotExistMessage = (message: string): string | null => {
  *   - "Failed to get transaction with id %s, error Entry not found in index"
  *   - "Failed to get transaction with id %s, error no such transaction ID [%s] in index"
  */
-const matchTransactionDoesNotExistMessage = (
-  message: string
-): string | null => {
-  const transactionDoesNotExistRegex =
-    /Failed to get transaction with id [^,]*, error (?:(?:Entry not found)|(?:no such transaction ID \[[^\]]*\])) in index/g;
-  const transactionDoesNotExistMatch = message.match(
-    transactionDoesNotExistRegex
-  );
-  logger.debug(
-    { message: message, result: transactionDoesNotExistMatch },
-    'Checking for transaction does not exist message'
-  );
+const matchTransactionDoesNotExistMessage = (message: string): string | null => {
+  const transactionDoesNotExistRegex = /Failed to get transaction with id [^,]*, error (?:(?:Entry not found)|(?:no such transaction ID \[[^\]]*\])) in index/g;
+  const transactionDoesNotExistMatch = message.match(transactionDoesNotExistRegex);
+  logger.debug({ message: message, result: transactionDoesNotExistMatch }, 'Checking for transaction does not exist message');
 
   if (transactionDoesNotExistMatch !== null) {
     return transactionDoesNotExistMatch[0];
@@ -241,10 +221,7 @@ const matchTransactionDoesNotExistMessage = (
  * Note: the error message text is not the same for the Go, Java, and
  * Javascript implementations of the chaincode!
  */
-export const handleError = (
-  transactionId: string,
-  err: unknown
-): Error | unknown => {
+export const handleError = (transactionId: string, err: unknown): Error | unknown => {
   logger.debug({ transactionId: transactionId, err }, 'Processing error');
 
   if (isErrorLike(err)) {
@@ -258,14 +235,9 @@ export const handleError = (
       return new AssetNotFoundError(assetDoesNotExistMatch, transactionId);
     }
 
-    const transactionDoesNotExistMatch = matchTransactionDoesNotExistMessage(
-      err.message
-    );
+    const transactionDoesNotExistMatch = matchTransactionDoesNotExistMessage(err.message);
     if (transactionDoesNotExistMatch !== null) {
-      return new TransactionNotFoundError(
-        transactionDoesNotExistMatch,
-        transactionId
-      );
+      return new TransactionNotFoundError(transactionDoesNotExistMatch, transactionId);
     }
   }
 

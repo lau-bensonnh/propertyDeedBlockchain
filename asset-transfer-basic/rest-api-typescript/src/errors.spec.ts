@@ -3,16 +3,7 @@
  */
 
 import { TimeoutError, TransactionError } from 'fabric-network';
-import {
-  AssetExistsError,
-  AssetNotFoundError,
-  TransactionNotFoundError,
-  getRetryAction,
-  handleError,
-  isDuplicateTransactionError,
-  isErrorLike,
-  RetryAction,
-} from './errors';
+import { AssetExistsError, AssetNotFoundError, TransactionNotFoundError, getRetryAction, handleError, isDuplicateTransactionError, isErrorLike, RetryAction } from './errors';
 
 import { mock } from 'jest-mock-extended';
 
@@ -43,9 +34,7 @@ describe('Errors', () => {
     });
 
     it('returns false for error like object with invalid stack', () => {
-      expect(
-        isErrorLike({ name: 'MockError', message: 'Fail', stack: false })
-      ).toBe(false);
+      expect(isErrorLike({ name: 'MockError', message: 'Fail', stack: false })).toBe(false);
     });
 
     it('returns true for error like object', () => {
@@ -62,18 +51,14 @@ describe('Errors', () => {
       const mockDuplicateTransactionError = mock<TransactionError>();
       mockDuplicateTransactionError.transactionCode = 'DUPLICATE_TXID';
 
-      expect(isDuplicateTransactionError(mockDuplicateTransactionError)).toBe(
-        true
-      );
+      expect(isDuplicateTransactionError(mockDuplicateTransactionError)).toBe(true);
     });
 
     it('returns false for a TransactionError without a transaction code of MVCC_READ_CONFLICT', () => {
       const mockDuplicateTransactionError = mock<TransactionError>();
       mockDuplicateTransactionError.transactionCode = 'MVCC_READ_CONFLICT';
 
-      expect(isDuplicateTransactionError(mockDuplicateTransactionError)).toBe(
-        false
-      );
+      expect(isDuplicateTransactionError(mockDuplicateTransactionError)).toBe(false);
     });
 
     it('returns true for an error when all endorsement details are duplicate transaction found', () => {
@@ -95,9 +80,7 @@ describe('Errors', () => {
         ],
       };
 
-      expect(isDuplicateTransactionError(mockDuplicateTransactionError)).toBe(
-        true
-      );
+      expect(isDuplicateTransactionError(mockDuplicateTransactionError)).toBe(true);
     });
 
     it('returns true for an error when at least one endorsement details are duplicate transaction found', () => {
@@ -119,9 +102,7 @@ describe('Errors', () => {
         ],
       };
 
-      expect(isDuplicateTransactionError(mockDuplicateTransactionError)).toBe(
-        true
-      );
+      expect(isDuplicateTransactionError(mockDuplicateTransactionError)).toBe(true);
     });
 
     it('returns false for an error without duplicate transaction endorsement details', () => {
@@ -140,9 +121,7 @@ describe('Errors', () => {
         ],
       };
 
-      expect(isDuplicateTransactionError(mockDuplicateTransactionError)).toBe(
-        false
-      );
+      expect(isDuplicateTransactionError(mockDuplicateTransactionError)).toBe(false);
     });
 
     it('returns false for an error without endorsement details', () => {
@@ -158,15 +137,11 @@ describe('Errors', () => {
         ],
       };
 
-      expect(isDuplicateTransactionError(mockDuplicateTransactionError)).toBe(
-        false
-      );
+      expect(isDuplicateTransactionError(mockDuplicateTransactionError)).toBe(false);
     });
 
     it('returns false for a basic Error object without endorsement details', () => {
-      expect(
-        isDuplicateTransactionError(new Error('duplicate transaction found'))
-      ).toBe(false);
+      expect(isDuplicateTransactionError(new Error('duplicate transaction found'))).toBe(false);
     });
 
     it('returns false for an undefined error', () => {
@@ -198,36 +173,23 @@ describe('Errors', () => {
         ],
       };
 
-      expect(getRetryAction(mockDuplicateTransactionError)).toBe(
-        RetryAction.None
-      );
+      expect(getRetryAction(mockDuplicateTransactionError)).toBe(RetryAction.None);
     });
 
     it('returns RetryAction.None for a TransactionNotFoundError', () => {
-      const mockTransactionNotFoundError = new TransactionNotFoundError(
-        'Failed to get transaction with id txn, error Entry not found in index',
-        'txn1'
-      );
+      const mockTransactionNotFoundError = new TransactionNotFoundError('Failed to get transaction with id txn, error Entry not found in index', 'txn1');
 
-      expect(getRetryAction(mockTransactionNotFoundError)).toBe(
-        RetryAction.None
-      );
+      expect(getRetryAction(mockTransactionNotFoundError)).toBe(RetryAction.None);
     });
 
     it('returns RetryAction.None for an AssetExistsError', () => {
-      const mockAssetExistsError = new AssetExistsError(
-        'The asset MOCK_ASSET already exists',
-        'txn1'
-      );
+      const mockAssetExistsError = new AssetExistsError('The asset MOCK_ASSET already exists', 'txn1');
 
       expect(getRetryAction(mockAssetExistsError)).toBe(RetryAction.None);
     });
 
     it('returns RetryAction.None for an AssetNotFoundError', () => {
-      const mockAssetNotFoundError = new AssetNotFoundError(
-        'the asset MOCK_ASSET does not exist',
-        'txn1'
-      );
+      const mockAssetNotFoundError = new AssetNotFoundError('the asset MOCK_ASSET does not exist', 'txn1');
 
       expect(getRetryAction(mockAssetNotFoundError)).toBe(RetryAction.None);
     });
@@ -235,18 +197,14 @@ describe('Errors', () => {
     it('returns RetryAction.WithExistingTransactionId for a TimeoutError', () => {
       const mockTimeoutError = new TimeoutError('MOCK TIMEOUT ERROR');
 
-      expect(getRetryAction(mockTimeoutError)).toBe(
-        RetryAction.WithExistingTransactionId
-      );
+      expect(getRetryAction(mockTimeoutError)).toBe(RetryAction.WithExistingTransactionId);
     });
 
     it('returns RetryAction.WithNewTransactionId for an MVCC_READ_CONFLICT TransactionError', () => {
       const mockTransactionError = mock<TransactionError>();
       mockTransactionError.transactionCode = 'MVCC_READ_CONFLICT';
 
-      expect(getRetryAction(mockTransactionError)).toBe(
-        RetryAction.WithNewTransactionId
-      );
+      expect(getRetryAction(mockTransactionError)).toBe(RetryAction.WithNewTransactionId);
     });
 
     it('returns RetryAction.WithNewTransactionId for an Error', () => {
@@ -263,48 +221,29 @@ describe('Errors', () => {
   });
 
   describe('handleError', () => {
-    it.each([
-      'the asset GOCHAINCODE already exists',
-      'Asset JAVACHAINCODE already exists',
-      'The asset JSCHAINCODE already exists',
-    ])(
+    it.each(['the asset GOCHAINCODE already exists', 'Asset JAVACHAINCODE already exists', 'The asset JSCHAINCODE already exists'])(
       'returns a AssetExistsError for errors with an asset already exists message: %s',
       (msg) => {
-        expect(handleError('txn1', new Error(msg))).toStrictEqual(
-          new AssetExistsError(msg, 'txn1')
-        );
+        expect(handleError('txn1', new Error(msg))).toStrictEqual(new AssetExistsError(msg, 'txn1'));
       }
     );
 
-    it.each([
-      'the asset GOCHAINCODE does not exist',
-      'Asset JAVACHAINCODE does not exist',
-      'The asset JSCHAINCODE does not exist',
-    ])(
+    it.each(['the asset GOCHAINCODE does not exist', 'Asset JAVACHAINCODE does not exist', 'The asset JSCHAINCODE does not exist'])(
       'returns a AssetNotFoundError for errors with an asset does not exist message: %s',
       (msg) => {
-        expect(handleError('txn1', new Error(msg))).toStrictEqual(
-          new AssetNotFoundError(msg, 'txn1')
-        );
+        expect(handleError('txn1', new Error(msg))).toStrictEqual(new AssetNotFoundError(msg, 'txn1'));
       }
     );
 
-    it.each([
-      'Failed to get transaction with id txn, error Entry not found in index',
-      'Failed to get transaction with id txn, error no such transaction ID [txn] in index',
-    ])(
+    it.each(['Failed to get transaction with id txn, error Entry not found in index', 'Failed to get transaction with id txn, error no such transaction ID [txn] in index'])(
       'returns a TransactionNotFoundError for errors with a transaction not found message: %s',
       (msg) => {
-        expect(handleError('txn1', new Error(msg))).toStrictEqual(
-          new TransactionNotFoundError(msg, 'txn1')
-        );
+        expect(handleError('txn1', new Error(msg))).toStrictEqual(new TransactionNotFoundError(msg, 'txn1'));
       }
     );
 
     it('returns the original error for errors with other messages', () => {
-      expect(handleError('txn1', new Error('MOCK ERROR'))).toStrictEqual(
-        new Error('MOCK ERROR')
-      );
+      expect(handleError('txn1', new Error('MOCK ERROR'))).toStrictEqual(new Error('MOCK ERROR'));
     });
 
     it('returns the original error for errors of other types', () => {

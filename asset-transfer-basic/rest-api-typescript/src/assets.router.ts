@@ -28,8 +28,7 @@ import { evatuateTransaction } from './fabric';
 import { addSubmitTransactionJob } from './jobs';
 import { logger } from './logger';
 
-const { ACCEPTED, BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } =
-  StatusCodes;
+const { ACCEPTED, BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } = StatusCodes;
 
 export const assetsRouter = express.Router();
 
@@ -82,16 +81,7 @@ assetsRouter.post(
 
     try {
       const submitQueue = req.app.locals.jobq as Queue;
-      const jobId = await addSubmitTransactionJob(
-        submitQueue,
-        mspId,
-        'CreateAsset',
-        assetId,
-        req.body.Color,
-        req.body.Size,
-        req.body.Owner,
-        req.body.AppraisedValue
-      );
+      const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'CreateAsset', assetId, req.body.Color, req.body.Size, req.body.Owner, req.body.AppraisedValue);
 
       return res.status(ACCEPTED).json({
         status: getReasonPhrase(ACCEPTED),
@@ -99,11 +89,7 @@ assetsRouter.post(
         timestamp: new Date().toISOString(),
       });
     } catch (err) {
-      logger.error(
-        { err },
-        'Error processing create asset request for asset ID %s',
-        assetId
-      );
+      logger.error({ err }, 'Error processing create asset request for asset ID %s', assetId);
 
       return res.status(INTERNAL_SERVER_ERROR).json({
         status: getReasonPhrase(INTERNAL_SERVER_ERROR),
@@ -141,11 +127,7 @@ assetsRouter.options('/:assetId', async (req: Request, res: Response) => {
       });
     }
   } catch (err) {
-    logger.error(
-      { err },
-      'Error processing asset options request for asset ID %s',
-      assetId
-    );
+    logger.error({ err }, 'Error processing asset options request for asset ID %s', assetId);
     return res.status(INTERNAL_SERVER_ERROR).json({
       status: getReasonPhrase(INTERNAL_SERVER_ERROR),
       timestamp: new Date().toISOString(),
@@ -166,11 +148,7 @@ assetsRouter.get('/:assetId', async (req: Request, res: Response) => {
 
     return res.status(OK).json(asset);
   } catch (err) {
-    logger.error(
-      { err },
-      'Error processing read asset request for asset ID %s',
-      assetId
-    );
+    logger.error({ err }, 'Error processing read asset request for asset ID %s', assetId);
 
     if (err instanceof AssetNotFoundError) {
       return res.status(NOT_FOUND).json({
@@ -222,16 +200,7 @@ assetsRouter.put(
 
     try {
       const submitQueue = req.app.locals.jobq as Queue;
-      const jobId = await addSubmitTransactionJob(
-        submitQueue,
-        mspId,
-        'UpdateAsset',
-        assetId,
-        req.body.color,
-        req.body.size,
-        req.body.owner,
-        req.body.appraisedValue
-      );
+      const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'UpdateAsset', assetId, req.body.color, req.body.size, req.body.owner, req.body.appraisedValue);
 
       return res.status(ACCEPTED).json({
         status: getReasonPhrase(ACCEPTED),
@@ -239,11 +208,7 @@ assetsRouter.put(
         timestamp: new Date().toISOString(),
       });
     } catch (err) {
-      logger.error(
-        { err },
-        'Error processing update asset request for asset ID %s',
-        assetId
-      );
+      logger.error({ err }, 'Error processing update asset request for asset ID %s', assetId);
 
       return res.status(INTERNAL_SERVER_ERROR).json({
         status: getReasonPhrase(INTERNAL_SERVER_ERROR),
@@ -284,13 +249,7 @@ assetsRouter.patch(
 
     try {
       const submitQueue = req.app.locals.jobq as Queue;
-      const jobId = await addSubmitTransactionJob(
-        submitQueue,
-        mspId,
-        'TransferAsset',
-        assetId,
-        newOwner
-      );
+      const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'TransferAsset', assetId, newOwner);
 
       return res.status(ACCEPTED).json({
         status: getReasonPhrase(ACCEPTED),
@@ -298,11 +257,7 @@ assetsRouter.patch(
         timestamp: new Date().toISOString(),
       });
     } catch (err) {
-      logger.error(
-        { err },
-        'Error processing update asset request for asset ID %s',
-        req.params.assetId
-      );
+      logger.error({ err }, 'Error processing update asset request for asset ID %s', req.params.assetId);
 
       return res.status(INTERNAL_SERVER_ERROR).json({
         status: getReasonPhrase(INTERNAL_SERVER_ERROR),
@@ -320,12 +275,7 @@ assetsRouter.delete('/:assetId', async (req: Request, res: Response) => {
 
   try {
     const submitQueue = req.app.locals.jobq as Queue;
-    const jobId = await addSubmitTransactionJob(
-      submitQueue,
-      mspId,
-      'DeleteAsset',
-      assetId
-    );
+    const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'DeleteAsset', assetId);
 
     return res.status(ACCEPTED).json({
       status: getReasonPhrase(ACCEPTED),
@@ -333,11 +283,7 @@ assetsRouter.delete('/:assetId', async (req: Request, res: Response) => {
       timestamp: new Date().toISOString(),
     });
   } catch (err) {
-    logger.error(
-      { err },
-      'Error processing delete asset request for asset ID %s',
-      assetId
-    );
+    logger.error({ err }, 'Error processing delete asset request for asset ID %s', assetId);
 
     return res.status(INTERNAL_SERVER_ERROR).json({
       status: getReasonPhrase(INTERNAL_SERVER_ERROR),

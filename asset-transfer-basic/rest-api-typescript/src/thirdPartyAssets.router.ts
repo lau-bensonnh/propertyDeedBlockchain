@@ -28,8 +28,7 @@ import { evatuateTransaction } from './fabric';
 import { addSubmitTransactionJob } from './jobs';
 import { logger } from './logger';
 
-const { ACCEPTED, BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } =
-  StatusCodes;
+const { ACCEPTED, BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } = StatusCodes;
 
 export const thirdPartyAssetsRouter = express.Router();
 
@@ -82,16 +81,7 @@ thirdPartyAssetsRouter.post(
 
     try {
       const submitQueue = req.app.locals.jobq as Queue;
-      const jobId = await addSubmitTransactionJob(
-        submitQueue,
-        mspId,
-        'CreateAsset',
-        assetId,
-        req.body.Color,
-        req.body.Size,
-        req.body.Owner,
-        req.body.AppraisedValue
-      );
+      const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'CreateAsset', assetId, req.body.Color, req.body.Size, req.body.Owner, req.body.AppraisedValue);
 
       return res.status(ACCEPTED).json({
         status: getReasonPhrase(ACCEPTED),
@@ -99,11 +89,7 @@ thirdPartyAssetsRouter.post(
         timestamp: new Date().toISOString(),
       });
     } catch (err) {
-      logger.error(
-        { err },
-        'Error processing create asset request for asset ID %s',
-        assetId
-      );
+      logger.error({ err }, 'Error processing create asset request for asset ID %s', assetId);
 
       return res.status(INTERNAL_SERVER_ERROR).json({
         status: getReasonPhrase(INTERNAL_SERVER_ERROR),
@@ -113,48 +99,41 @@ thirdPartyAssetsRouter.post(
   }
 );
 
-thirdPartyAssetsRouter.options(
-  '/:assetId',
-  async (req: Request, res: Response) => {
-    const assetId = req.params.assetId;
-    logger.debug('Asset options request received for asset ID %s', assetId);
+thirdPartyAssetsRouter.options('/:assetId', async (req: Request, res: Response) => {
+  const assetId = req.params.assetId;
+  logger.debug('Asset options request received for asset ID %s', assetId);
 
-    try {
-      const mspId = req.user as string;
-      const contract = req.app.locals[mspId]?.assetContract as Contract;
+  try {
+    const mspId = req.user as string;
+    const contract = req.app.locals[mspId]?.assetContract as Contract;
 
-      const data = await evatuateTransaction(contract, 'AssetExists', assetId);
-      const exists = data.toString() === 'true';
+    const data = await evatuateTransaction(contract, 'AssetExists', assetId);
+    const exists = data.toString() === 'true';
 
-      if (exists) {
-        return res
-          .status(OK)
-          .set({
-            Allow: 'DELETE,GET,OPTIONS,PATCH,PUT',
-          })
-          .json({
-            status: getReasonPhrase(OK),
-            timestamp: new Date().toISOString(),
-          });
-      } else {
-        return res.status(NOT_FOUND).json({
-          status: getReasonPhrase(NOT_FOUND),
+    if (exists) {
+      return res
+        .status(OK)
+        .set({
+          Allow: 'DELETE,GET,OPTIONS,PATCH,PUT',
+        })
+        .json({
+          status: getReasonPhrase(OK),
           timestamp: new Date().toISOString(),
         });
-      }
-    } catch (err) {
-      logger.error(
-        { err },
-        'Error processing asset options request for asset ID %s',
-        assetId
-      );
-      return res.status(INTERNAL_SERVER_ERROR).json({
-        status: getReasonPhrase(INTERNAL_SERVER_ERROR),
+    } else {
+      return res.status(NOT_FOUND).json({
+        status: getReasonPhrase(NOT_FOUND),
         timestamp: new Date().toISOString(),
       });
     }
+  } catch (err) {
+    logger.error({ err }, 'Error processing asset options request for asset ID %s', assetId);
+    return res.status(INTERNAL_SERVER_ERROR).json({
+      status: getReasonPhrase(INTERNAL_SERVER_ERROR),
+      timestamp: new Date().toISOString(),
+    });
   }
-);
+});
 
 thirdPartyAssetsRouter.get('/:assetId', async (req: Request, res: Response) => {
   const assetId = req.params.assetId;
@@ -169,11 +148,7 @@ thirdPartyAssetsRouter.get('/:assetId', async (req: Request, res: Response) => {
 
     return res.status(OK).json(asset);
   } catch (err) {
-    logger.error(
-      { err },
-      'Error processing read asset request for asset ID %s',
-      assetId
-    );
+    logger.error({ err }, 'Error processing read asset request for asset ID %s', assetId);
 
     if (err instanceof AssetNotFoundError) {
       return res.status(NOT_FOUND).json({
@@ -225,16 +200,7 @@ thirdPartyAssetsRouter.put(
 
     try {
       const submitQueue = req.app.locals.jobq as Queue;
-      const jobId = await addSubmitTransactionJob(
-        submitQueue,
-        mspId,
-        'UpdateAsset',
-        assetId,
-        req.body.color,
-        req.body.size,
-        req.body.owner,
-        req.body.appraisedValue
-      );
+      const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'UpdateAsset', assetId, req.body.color, req.body.size, req.body.owner, req.body.appraisedValue);
 
       return res.status(ACCEPTED).json({
         status: getReasonPhrase(ACCEPTED),
@@ -242,11 +208,7 @@ thirdPartyAssetsRouter.put(
         timestamp: new Date().toISOString(),
       });
     } catch (err) {
-      logger.error(
-        { err },
-        'Error processing update asset request for asset ID %s',
-        assetId
-      );
+      logger.error({ err }, 'Error processing update asset request for asset ID %s', assetId);
 
       return res.status(INTERNAL_SERVER_ERROR).json({
         status: getReasonPhrase(INTERNAL_SERVER_ERROR),
@@ -287,13 +249,7 @@ thirdPartyAssetsRouter.patch(
 
     try {
       const submitQueue = req.app.locals.jobq as Queue;
-      const jobId = await addSubmitTransactionJob(
-        submitQueue,
-        mspId,
-        'TransferAsset',
-        assetId,
-        newOwner
-      );
+      const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'TransferAsset', assetId, newOwner);
 
       return res.status(ACCEPTED).json({
         status: getReasonPhrase(ACCEPTED),
@@ -301,11 +257,7 @@ thirdPartyAssetsRouter.patch(
         timestamp: new Date().toISOString(),
       });
     } catch (err) {
-      logger.error(
-        { err },
-        'Error processing update asset request for asset ID %s',
-        req.params.assetId
-      );
+      logger.error({ err }, 'Error processing update asset request for asset ID %s', req.params.assetId);
 
       return res.status(INTERNAL_SERVER_ERROR).json({
         status: getReasonPhrase(INTERNAL_SERVER_ERROR),
@@ -315,39 +267,27 @@ thirdPartyAssetsRouter.patch(
   }
 );
 
-thirdPartyAssetsRouter.delete(
-  '/:assetId',
-  async (req: Request, res: Response) => {
-    logger.debug(req.body, 'Delete asset request received');
+thirdPartyAssetsRouter.delete('/:assetId', async (req: Request, res: Response) => {
+  logger.debug(req.body, 'Delete asset request received');
 
-    const mspId = req.user as string;
-    const assetId = req.params.assetId;
+  const mspId = req.user as string;
+  const assetId = req.params.assetId;
 
-    try {
-      const submitQueue = req.app.locals.jobq as Queue;
-      const jobId = await addSubmitTransactionJob(
-        submitQueue,
-        mspId,
-        'DeleteAsset',
-        assetId
-      );
+  try {
+    const submitQueue = req.app.locals.jobq as Queue;
+    const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'DeleteAsset', assetId);
 
-      return res.status(ACCEPTED).json({
-        status: getReasonPhrase(ACCEPTED),
-        jobId: jobId,
-        timestamp: new Date().toISOString(),
-      });
-    } catch (err) {
-      logger.error(
-        { err },
-        'Error processing delete asset request for asset ID %s',
-        assetId
-      );
+    return res.status(ACCEPTED).json({
+      status: getReasonPhrase(ACCEPTED),
+      jobId: jobId,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) {
+    logger.error({ err }, 'Error processing delete asset request for asset ID %s', assetId);
 
-      return res.status(INTERNAL_SERVER_ERROR).json({
-        status: getReasonPhrase(INTERNAL_SERVER_ERROR),
-        timestamp: new Date().toISOString(),
-      });
-    }
+    return res.status(INTERNAL_SERVER_ERROR).json({
+      status: getReasonPhrase(INTERNAL_SERVER_ERROR),
+      timestamp: new Date().toISOString(),
+    });
   }
-);
+});

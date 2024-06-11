@@ -32,9 +32,7 @@ describe('Config values', () => {
       process.env.LOG_LEVEL = 'ludicrous';
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "LOG_LEVEL" should be one of [fatal, error, warn, info, debug, trace, silent]'
-      );
+      }).toThrow('env-var: "LOG_LEVEL" should be one of [fatal, error, warn, info, debug, trace, silent]');
     });
   });
 
@@ -54,9 +52,7 @@ describe('Config values', () => {
       process.env.PORT = '65536';
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "PORT" cannot assign a port number greater than 65535. An example of a valid value would be: 3000'
-      );
+      }).toThrow('env-var: "PORT" cannot assign a port number greater than 65535. An example of a valid value would be: 3000');
     });
   });
 
@@ -76,9 +72,7 @@ describe('Config values', () => {
       process.env.SUBMIT_JOB_BACKOFF_TYPE = 'jitter';
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "SUBMIT_JOB_BACKOFF_TYPE" should be one of [fixed, exponential]'
-      );
+      }).toThrow('env-var: "SUBMIT_JOB_BACKOFF_TYPE" should be one of [fixed, exponential]');
     });
   });
 
@@ -98,9 +92,7 @@ describe('Config values', () => {
       process.env.SUBMIT_JOB_BACKOFF_DELAY = 'short';
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "SUBMIT_JOB_BACKOFF_DELAY" should be a valid integer. An example of a valid value would be: 3000'
-      );
+      }).toThrow('env-var: "SUBMIT_JOB_BACKOFF_DELAY" should be a valid integer. An example of a valid value would be: 3000');
     });
   });
 
@@ -120,9 +112,7 @@ describe('Config values', () => {
       process.env.SUBMIT_JOB_ATTEMPTS = 'lots';
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "SUBMIT_JOB_ATTEMPTS" should be a valid integer. An example of a valid value would be: 5'
-      );
+      }).toThrow('env-var: "SUBMIT_JOB_ATTEMPTS" should be a valid integer. An example of a valid value would be: 5');
     });
   });
 
@@ -142,9 +132,7 @@ describe('Config values', () => {
       process.env.SUBMIT_JOB_CONCURRENCY = 'lots';
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "SUBMIT_JOB_CONCURRENCY" should be a valid integer. An example of a valid value would be: 5'
-      );
+      }).toThrow('env-var: "SUBMIT_JOB_CONCURRENCY" should be a valid integer. An example of a valid value would be: 5');
     });
   });
 
@@ -164,9 +152,7 @@ describe('Config values', () => {
       process.env.MAX_COMPLETED_SUBMIT_JOBS = 'lots';
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "MAX_COMPLETED_SUBMIT_JOBS" should be a valid integer. An example of a valid value would be: 1000'
-      );
+      }).toThrow('env-var: "MAX_COMPLETED_SUBMIT_JOBS" should be a valid integer. An example of a valid value would be: 1000');
     });
   });
 
@@ -186,9 +172,7 @@ describe('Config values', () => {
       process.env.MAX_FAILED_SUBMIT_JOBS = 'lots';
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "MAX_FAILED_SUBMIT_JOBS" should be a valid integer. An example of a valid value would be: 1000'
-      );
+      }).toThrow('env-var: "MAX_FAILED_SUBMIT_JOBS" should be a valid integer. An example of a valid value would be: 1000');
     });
   });
 
@@ -208,9 +192,7 @@ describe('Config values', () => {
       process.env.SUBMIT_JOB_QUEUE_SCHEDULER = '11';
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "SUBMIT_JOB_QUEUE_SCHEDULER" should be either "true", "false", "TRUE", or "FALSE". An example of a valid value would be: true'
-      );
+      }).toThrow('env-var: "SUBMIT_JOB_QUEUE_SCHEDULER" should be either "true", "false", "TRUE", or "FALSE". An example of a valid value would be: true');
     });
   });
 
@@ -230,9 +212,7 @@ describe('Config values', () => {
       process.env.AS_LOCAL_HOST = '11';
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "AS_LOCAL_HOST" should be either "true", "false", "TRUE", or "FALSE". An example of a valid value would be: true'
-      );
+      }).toThrow('env-var: "AS_LOCAL_HOST" should be either "true", "false", "TRUE", or "FALSE". An example of a valid value would be: true');
     });
   });
 
@@ -304,9 +284,7 @@ describe('Config values', () => {
       process.env.HLF_COMMIT_TIMEOUT = 'short';
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "HLF_COMMIT_TIMEOUT" should be a valid integer. An example of a valid value would be: 300'
-      );
+      }).toThrow('env-var: "HLF_COMMIT_TIMEOUT" should be a valid integer. An example of a valid value would be: 300');
     });
   });
 
@@ -326,9 +304,7 @@ describe('Config values', () => {
       process.env.HLF_ENDORSE_TIMEOUT = 'short';
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "HLF_ENDORSE_TIMEOUT" should be a valid integer. An example of a valid value would be: 30'
-      );
+      }).toThrow('env-var: "HLF_ENDORSE_TIMEOUT" should be a valid integer. An example of a valid value would be: 30');
     });
   });
 
@@ -348,9 +324,7 @@ describe('Config values', () => {
       process.env.HLF_QUERY_TIMEOUT = 'long';
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "HLF_QUERY_TIMEOUT" should be a valid integer. An example of a valid value would be: 3'
-      );
+      }).toThrow('env-var: "HLF_QUERY_TIMEOUT" should be a valid integer. An example of a valid value would be: 3');
     });
   });
 
@@ -507,9 +481,7 @@ describe('Config values', () => {
       process.env.REDIS_PORT = '65536';
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "REDIS_PORT" cannot assign a port number greater than 65535. An example of a valid value would be: 6379'
-      );
+      }).toThrow('env-var: "REDIS_PORT" cannot assign a port number greater than 65535. An example of a valid value would be: 6379');
     });
   });
 
@@ -544,9 +516,7 @@ describe('Config values', () => {
       delete process.env.ORG1_APIKEY;
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "ORG1_APIKEY" is a required variable, but it was not set. An example of a valid value would be: 123'
-      );
+      }).toThrow('env-var: "ORG1_APIKEY" is a required variable, but it was not set. An example of a valid value would be: 123');
     });
 
     it('can be configured using the "ORG1_APIKEY" environment variable', () => {
@@ -561,9 +531,7 @@ describe('Config values', () => {
       delete process.env.ORG2_APIKEY;
       expect(() => {
         require('./config');
-      }).toThrow(
-        'env-var: "ORG2_APIKEY" is a required variable, but it was not set. An example of a valid value would be: 456'
-      );
+      }).toThrow('env-var: "ORG2_APIKEY" is a required variable, but it was not set. An example of a valid value would be: 456');
     });
 
     it('can be configured using the "ORG1_APIKEY" environment variable', () => {

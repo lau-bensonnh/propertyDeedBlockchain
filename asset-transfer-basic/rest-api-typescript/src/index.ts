@@ -7,17 +7,8 @@
  */
 
 import * as config from './config';
-import {
-  createGateway,
-  createWallet,
-  getContracts,
-  getNetwork,
-} from './fabric';
-import {
-  initJobQueue,
-  initJobQueueScheduler,
-  initJobQueueWorker,
-} from './jobs';
+import { createGateway, createWallet, getContracts, getNetwork } from './fabric';
+import { initJobQueue, initJobQueueScheduler, initJobQueueWorker } from './jobs';
 import { logger } from './logger';
 import { createServer } from './server';
 import { isMaxmemoryPolicyNoeviction } from './redis';
@@ -30,9 +21,7 @@ let jobQueueScheduler: QueueScheduler | undefined;
 async function main() {
   logger.info('Checking Redis config');
   if (!(await isMaxmemoryPolicyNoeviction())) {
-    throw new Error(
-      'Invalid redis configuration: redis instance must have the setting maxmemory-policy=noeviction'
-    );
+    throw new Error('Invalid redis configuration: redis instance must have the setting maxmemory-policy=noeviction');
   }
 
   logger.info('Creating REST server');
@@ -41,22 +30,14 @@ async function main() {
   logger.info('Connecting to Fabric network with org1 mspid');
   const wallet = await createWallet();
 
-  const gatewayOrg1 = await createGateway(
-    config.connectionProfileOrg1,
-    config.mspIdOrg1,
-    wallet
-  );
+  const gatewayOrg1 = await createGateway(config.connectionProfileOrg1, config.mspIdOrg1, wallet);
   const networkOrg1 = await getNetwork(gatewayOrg1);
   const contractsOrg1 = await getContracts(networkOrg1);
 
   app.locals[config.mspIdOrg1] = contractsOrg1;
 
   logger.info('Connecting to Fabric network with org2 mspid');
-  const gatewayOrg2 = await createGateway(
-    config.connectionProfileOrg2,
-    config.mspIdOrg2,
-    wallet
-  );
+  const gatewayOrg2 = await createGateway(config.connectionProfileOrg2, config.mspIdOrg2, wallet);
   const networkOrg2 = await getNetwork(gatewayOrg2);
   const contractsOrg2 = await getContracts(networkOrg2);
 

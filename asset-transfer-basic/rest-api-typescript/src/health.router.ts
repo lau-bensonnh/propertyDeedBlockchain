@@ -29,16 +29,22 @@ healthRouter.get('/ready', (_req, res: Response) =>
 healthRouter.get('/live', async (req: Request, res: Response) => {
   logger.debug(req.body, 'Liveness request received');
 
+  let results = null;
   try {
     const submitQueue = req.app.locals.jobq as Queue;
     const qsccOrg1 = req.app.locals[config.mspIdOrg1]?.qsccContract as Contract;
     const qsccOrg2 = req.app.locals[config.mspIdOrg2]?.qsccContract as Contract;
 
-    await Promise.all([
-      getBlockHeight(qsccOrg1),
-      getBlockHeight(qsccOrg2),
-      getJobCounts(submitQueue),
-    ]);
+    // await Promise.all([
+    //   getBlockHeight(qsccOrg1),
+    //   getBlockHeight(qsccOrg2),
+    //   getJobCounts(submitQueue),
+    // ]);
+    results = {
+      org1: await getBlockHeight(qsccOrg1),
+      org2: await getBlockHeight(qsccOrg2),
+      jobCounts: await getJobCounts(submitQueue),
+    };
   } catch (err) {
     logger.error({ err }, 'Error processing liveness request');
 
@@ -51,5 +57,6 @@ healthRouter.get('/live', async (req: Request, res: Response) => {
   return res.status(OK).json({
     status: getReasonPhrase(OK),
     timestamp: new Date().toISOString(),
+    results,
   });
 });

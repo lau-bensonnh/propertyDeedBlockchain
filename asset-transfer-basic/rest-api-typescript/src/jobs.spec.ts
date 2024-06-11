@@ -3,14 +3,7 @@
  */
 
 import { Job, Queue } from 'bullmq';
-import {
-  addSubmitTransactionJob,
-  getJobCounts,
-  getJobSummary,
-  processSubmitTransactionJob,
-  JobNotFoundError,
-  updateJobData,
-} from './jobs';
+import { addSubmitTransactionJob, getJobCounts, getJobSummary, processSubmitTransactionJob, JobNotFoundError, updateJobData } from './jobs';
 import { Contract, Transaction } from 'fabric-network';
 import { mock, MockProxy } from 'jest-mock-extended';
 import { Application } from 'express';
@@ -28,13 +21,7 @@ describe('addSubmitTransactionJob', () => {
   it('returns the new job ID', async () => {
     mockJob.id = 'mockJobId';
 
-    const jobid = await addSubmitTransactionJob(
-      mockQueue,
-      'mockMspId',
-      'txn',
-      'arg1',
-      'arg2'
-    );
+    const jobid = await addSubmitTransactionJob(mockQueue, 'mockMspId', 'txn', 'arg1', 'arg2');
 
     expect(jobid).toBe('mockJobId');
   });
@@ -43,13 +30,7 @@ describe('addSubmitTransactionJob', () => {
     mockJob.id = undefined;
 
     await expect(async () => {
-      await addSubmitTransactionJob(
-        mockQueue,
-        'mockMspId',
-        'txn',
-        'arg1',
-        'arg2'
-      );
+      await addSubmitTransactionJob(mockQueue, 'mockMspId', 'txn', 'arg1', 'arg2');
     }).rejects.toThrowError('Submit transaction job ID not available');
   });
 });
@@ -197,15 +178,13 @@ describe('updateJobData', () => {
 describe('getJobCounts', () => {
   it('gets job counts from the specified queue', async () => {
     const mockQueue = mock<Queue>();
-    mockQueue.getJobCounts
-      .calledWith('active', 'completed', 'delayed', 'failed', 'waiting')
-      .mockResolvedValue({
-        active: 1,
-        completed: 2,
-        delayed: 3,
-        failed: 4,
-        waiting: 5,
-      });
+    mockQueue.getJobCounts.calledWith('active', 'completed', 'delayed', 'failed', 'waiting').mockResolvedValue({
+      active: 1,
+      completed: 2,
+      delayed: 3,
+      failed: 4,
+      waiting: 5,
+    });
 
     expect(await getJobCounts(mockQueue)).toStrictEqual({
       active: 1,
@@ -230,12 +209,8 @@ describe('getJobCounts', () => {
       mockTransaction.getTransactionId.mockReturnValue('mockTransactionId');
 
       mockContract = mock<Contract>();
-      mockContract.createTransaction
-        .calledWith('txn')
-        .mockReturnValue(mockTransaction);
-      mockContract.deserializeTransaction
-        .calledWith(mockSavedState)
-        .mockReturnValue(mockTransaction);
+      mockContract.createTransaction.calledWith('txn').mockReturnValue(mockTransaction);
+      mockContract.deserializeTransaction.calledWith(mockSavedState).mockReturnValue(mockTransaction);
       mockContracts.set('mockMspid', mockContract);
 
       mockApplication = mock<Application>();
@@ -249,10 +224,7 @@ describe('getJobCounts', () => {
         mspid: 'missingMspid',
       };
 
-      const jobResult = await processSubmitTransactionJob(
-        mockApplication,
-        mockJob
-      );
+      const jobResult = await processSubmitTransactionJob(mockApplication, mockJob);
 
       expect(jobResult).toStrictEqual({
         transactionError: undefined,
@@ -266,14 +238,9 @@ describe('getJobCounts', () => {
         transactionName: 'txn',
         transactionArgs: ['arg1', 'arg2'],
       };
-      mockTransaction.submit
-        .calledWith('arg1', 'arg2')
-        .mockResolvedValue(mockPayload);
+      mockTransaction.submit.calledWith('arg1', 'arg2').mockResolvedValue(mockPayload);
 
-      const jobResult = await processSubmitTransactionJob(
-        mockApplication,
-        mockJob
-      );
+      const jobResult = await processSubmitTransactionJob(mockApplication, mockJob);
 
       expect(jobResult).toStrictEqual({
         transactionError: undefined,
@@ -288,14 +255,9 @@ describe('getJobCounts', () => {
         transactionArgs: ['arg1', 'arg2'],
         transactionState: mockSavedState,
       };
-      mockTransaction.submit
-        .calledWith('arg1', 'arg2')
-        .mockResolvedValue(mockPayload);
+      mockTransaction.submit.calledWith('arg1', 'arg2').mockResolvedValue(mockPayload);
 
-      const jobResult = await processSubmitTransactionJob(
-        mockApplication,
-        mockJob
-      );
+      const jobResult = await processSubmitTransactionJob(mockApplication, mockJob);
 
       expect(jobResult).toStrictEqual({
         transactionError: undefined,
@@ -310,22 +272,12 @@ describe('getJobCounts', () => {
         transactionArgs: ['arg1', 'arg2'],
         transactionState: mockSavedState,
       };
-      mockTransaction.submit
-        .calledWith('arg1', 'arg2')
-        .mockRejectedValue(
-          new Error(
-            'Failed to get transaction with id txn, error Entry not found in index'
-          )
-        );
+      mockTransaction.submit.calledWith('arg1', 'arg2').mockRejectedValue(new Error('Failed to get transaction with id txn, error Entry not found in index'));
 
-      const jobResult = await processSubmitTransactionJob(
-        mockApplication,
-        mockJob
-      );
+      const jobResult = await processSubmitTransactionJob(mockApplication, mockJob);
 
       expect(jobResult).toStrictEqual({
-        transactionError:
-          'TransactionNotFoundError: Failed to get transaction with id txn, error Entry not found in index',
+        transactionError: 'TransactionNotFoundError: Failed to get transaction with id txn, error Entry not found in index',
         transactionPayload: undefined,
       });
     });
@@ -337,9 +289,7 @@ describe('getJobCounts', () => {
         transactionArgs: ['arg1', 'arg2'],
         transactionState: mockSavedState,
       };
-      mockTransaction.submit
-        .calledWith('arg1', 'arg2')
-        .mockRejectedValue(new Error('MOCK ERROR'));
+      mockTransaction.submit.calledWith('arg1', 'arg2').mockRejectedValue(new Error('MOCK ERROR'));
 
       await expect(async () => {
         await processSubmitTransactionJob(mockApplication, mockJob);
