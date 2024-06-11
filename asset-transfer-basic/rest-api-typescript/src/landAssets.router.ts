@@ -248,8 +248,8 @@ landAssetsRouter.post(
   }
 );
 
-landAssetsRouter.put(
-  '/:assetId',
+landAssetsRouter.post(
+  '/update/:assetId',
   // body().isObject().withMessage('body must contain an asset object'),
   // body('ID', 'must be a string').notEmpty(),
   // body('Color', 'must be a string').notEmpty(),
@@ -282,9 +282,28 @@ landAssetsRouter.put(
     const mspId = req.user as string;
     const assetId = req.params.assetId;
 
+    const contract = req.app.locals[mspId]?.assetContract as Contract;
+    const data = await evatuateTransaction(contract, 'ReadAsset', assetId);
+    const asset = JSON.parse(data.toString());
+    const updateFields = {
+      propertyStatus: req.body.propertyStatus,
+      propertyReferenceNumber: req.body.propertyReferenceNumber,
+      propertyHeldInfos: req.body.propertyHeldInfos,
+      propertyAddress: req.body.propertyAddress,
+      propertyChineseAddress: req.body.propertyChineseAddress,
+      propertyShareOfTheLocation: req.body.propertyShareOfTheLocation,
+      propertyRemarks: req.body.propertyRemarks,
+    };
+    const updateAsset = {
+      ...asset,
+      version: asset.version + 1,
+      ...updateFields,
+      updatedAt: new Date().toISOString(),
+    };
+
     try {
       const submitQueue = req.app.locals.jobq as Queue;
-      const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'UpdateAsset', assetId, req.body.color, req.body.size, req.body.owner, req.body.appraisedValue);
+      const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'UpdateAsset', assetId, JSON.stringify(updateAsset));
 
       return res.status(ACCEPTED).json({
         status: getReasonPhrase(ACCEPTED),
@@ -302,56 +321,7 @@ landAssetsRouter.put(
   }
 );
 
-landAssetsRouter.patch(
-  '/:assetId',
-  body()
-    .isArray({
-      min: 1,
-      max: 1,
-    })
-    .withMessage('body must contain an array with a single patch operation'),
-  body('*.op', "operation must be 'replace'").equals('replace'),
-  body('*.path', "path must be '/Owner'").equals('/Owner'),
-  body('*.value', 'must be a string').isString(),
-  async (req: Request, res: Response) => {
-    logger.debug(req.body, 'Transfer asset request received');
-
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(BAD_REQUEST).json({
-        status: getReasonPhrase(BAD_REQUEST),
-        reason: 'VALIDATION_ERROR',
-        message: 'Invalid request body',
-        timestamp: new Date().toISOString(),
-        errors: errors.array(),
-      });
-    }
-
-    const mspId = req.user as string;
-    const assetId = req.params.assetId;
-    const newOwner = req.body[0].value;
-
-    try {
-      const submitQueue = req.app.locals.jobq as Queue;
-      const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'TransferAsset', assetId, newOwner);
-
-      return res.status(ACCEPTED).json({
-        status: getReasonPhrase(ACCEPTED),
-        jobId: jobId,
-        timestamp: new Date().toISOString(),
-      });
-    } catch (err) {
-      logger.error({ err }, 'Error processing update asset request for asset ID %s', req.params.assetId);
-
-      return res.status(INTERNAL_SERVER_ERROR).json({
-        status: getReasonPhrase(INTERNAL_SERVER_ERROR),
-        timestamp: new Date().toISOString(),
-      });
-    }
-  }
-);
-
-landAssetsRouter.delete('/:assetId', async (req: Request, res: Response) => {
+landAssetsRouter.post('/delete/:assetId', async (req: Request, res: Response) => {
   logger.debug(req.body, 'Delete asset request received');
 
   const mspId = req.user as string;
