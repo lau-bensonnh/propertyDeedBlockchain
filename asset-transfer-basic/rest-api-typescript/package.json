@@ -7,6 +7,7 @@
     "node": ">=12"
   },
   "dependencies": {
+    "@types/joi": "^17.2.3",
     "@types/lodash": "^4.17.5",
     "bullmq": "^1.47.2",
     "cors": "^2.8.5",
@@ -19,6 +20,7 @@
     "helmet": "^4.6.0",
     "http-status-codes": "^2.1.4",
     "ioredis": "^4.27.8",
+    "joi": "^17.13.1",
     "lodash": "^4.17.21",
     "long": "^5.2.3",
     "passport": "^0.6.0",

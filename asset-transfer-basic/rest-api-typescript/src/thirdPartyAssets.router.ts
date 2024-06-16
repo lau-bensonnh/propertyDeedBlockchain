@@ -17,6 +17,7 @@
  * To allow requests to respond quickly enough, this sample queues submit
  * requests for processing asynchronously and immediately returns 202 Accepted
  */
+import Joi from 'joi';
 import _ from 'lodash';
 import express, { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
@@ -30,6 +31,29 @@ import { logger } from './logger';
 
 const { ACCEPTED, BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } = StatusCodes;
 
+const schema = {
+  submitTransaction: Joi.object({
+    owners: Joi.array()
+      .items(Joi.alternatives().try(Joi.string(), Joi.object({ nameOfOwner: Joi.string(), capacity: Joi.string() })))
+      .required(),
+    memorialNumber: Joi.string().required(),
+    dateOfInstrument: Joi.string().required(),
+    dateOfRegistration: Joi.string().required(),
+    consideration: Joi.string().required(),
+    remarks: Joi.string().required(),
+  }),
+  submitIncumbrance: Joi.object({
+    memorialNumber: Joi.string().required(),
+    dateOfInstrument: Joi.string().required(),
+    dateOfRegistration: Joi.string().required(),
+    natureOfIncumbrances: Joi.string().required(),
+    inFavourOf: Joi.alternatives()
+      .try(Joi.string(), Joi.array().items(Joi.alternatives().try(Joi.string(), Joi.object({ nameOfOwner: Joi.string(), capacity: Joi.string() }))))
+      .required(),
+    consideration: Joi.string().required(),
+    remarks: Joi.string().required(),
+  }),
+};
 export const thirdPartyAssetsRouter = express.Router();
 
 thirdPartyAssetsRouter.post('/find', async (req: Request, res: Response) => {
@@ -104,13 +128,19 @@ thirdPartyAssetsRouter.post('/get/:assetId', async (req: Request, res: Response)
     });
   }
 });
-
 thirdPartyAssetsRouter.post('/transaction/submit/:assetId', async (req: Request, res: Response) => {
   console.log('/assets/transaction/submit/:assetId received');
   const assetId = req.params.assetId;
   logger.debug('Read asset request received for asset ID %s', assetId);
 
   try {
+    const { error } = schema.submitTransaction.validate(req.body);
+    if (error) {
+      return res.status(BAD_REQUEST).json({
+        error: error,
+      });
+    }
+
     const mspId = req.user as string;
     const contract = req.app.locals[mspId]?.assetContract as Contract;
 
@@ -156,6 +186,12 @@ thirdPartyAssetsRouter.post('/incumbrance/submit/:assetId', async (req: Request,
   const assetId = req.params.assetId;
   logger.debug('Read asset request received for asset ID %s', assetId);
 
+  const { error } = schema.submitIncumbrance.validate(req.body);
+  if (error) {
+    return res.status(BAD_REQUEST).json({
+      error: error,
+    });
+  }
   try {
     const mspId = req.user as string;
     const contract = req.app.locals[mspId]?.assetContract as Contract;
@@ -172,7 +208,7 @@ thirdPartyAssetsRouter.post('/incumbrance/submit/:assetId', async (req: Request,
       consideration: req.body.consideration,
       remarks: req.body.remarks,
 
-      submittedAt: new Date().getTime(),
+      submittedAt: new Date(),
       submittedBy: mspId,
     };
     const incumbrances: object[] = _.isArray(asset.incumbrancePendingRegistration) ? asset.incumbrancePendingRegistration : [];

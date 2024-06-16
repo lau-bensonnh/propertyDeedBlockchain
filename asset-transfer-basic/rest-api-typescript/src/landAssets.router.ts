@@ -30,8 +30,88 @@ import { addSubmitTransactionJob } from './jobs';
 import { logger } from './logger';
 import { Asset } from './asset';
 import _ from 'lodash';
-
+import Joi from 'joi';
+import { info } from 'console';
 const { ACCEPTED, BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } = StatusCodes;
+const ownerSchema = Joi.array()
+  .items(Joi.alternatives().try(Joi.string(), Joi.object({ nameOfOwner: Joi.string(), capacity: Joi.string() })))
+  .required();
+
+const infoSchema = {
+
+  transaction: Joi.object({
+    memorialNumber: Joi.string().required(),
+    dateOfInstrument: Joi.string().required(),
+    dateOfRegistration: Joi.string().required(),
+    consideration: Joi.string().required(),
+    remarks: Joi.string().required(),
+    submittedAt: Joi.date().optional(),
+    submittedBy: Joi.string().optional(),
+    approvedAt: Joi.date().optional(),
+    approvedBy: Joi.string().optional(),
+    rejectedAt: Joi.date().optional(),
+    rejectedBy: Joi.string().optional(),
+  }),
+  incumbrance: Joi.object({
+    memorialNumber: Joi.string().required(),
+    dateOfInstrument: Joi.string().required(),
+    dateOfRegistration: Joi.string().required(),
+    natureOfIncumbrances: Joi.string().required(),
+    inFavourOf: ownerSchema,
+    consideration: Joi.string().required(),
+    remarks: Joi.string().required(),
+
+    submittedAt: Joi.date().optional(),
+    submittedBy: Joi.string().optional(),
+    approvedAt: Joi.date().optional(),
+    approvedBy: Joi.string().optional(),
+    rejectedAt: Joi.date().optional(),
+    rejectedBy: Joi.string().optional(),
+
+  }),
+  heldInfo: Joi.object({
+    locationNumber: Joi.string().required(),
+    heldUnder: Joi.string().required(),
+    leaseTerm: Joi.string().required(),
+    commencementOfLeaseTerm: Joi.string().required(),
+    rentPerAnnum: Joi.string().required(),
+  }),
+};
+
+const schema = {
+  createAsset: Joi.object({
+    ID: Joi.string().required(),
+    propertyStatus: Joi.string().valid('Develop', 'InMarket', 'Recycled').required(),
+    propertyReferenceNumber: Joi.string().required(),
+    propertyHeldInfos: Joi.array().items(infoSchema.heldInfo).required(),
+    propertyAddress: Joi.string().required(),
+    propertyChineseAddress: Joi.string().required(),
+    propertyShareOfTheLocation: Joi.string().required(),
+    propertyRemarks: Joi.array().items(Joi.string()).required(),
+    transactionHistory: Joi.array().items(infoSchema.transaction).required(),
+    deedsPendingRegistration: Joi.array().items(infoSchema.transaction).required(),
+    deedsPendingRegistrationRejected: Joi.array().items(infoSchema.transaction).required(),
+    incumbranceHistory: Joi.array().items(infoSchema.incumbrance).required(),
+    incumbrancePendingRegistration: Joi.array().items(infoSchema.incumbrance).required(),
+    incumbrancePendingRegistrationRejected: Joi.array().items(infoSchema.incumbrance).required(),
+  }),
+  updateAsset: Joi.object({
+    ID: Joi.string().required(),
+    propertyStatus: Joi.string().valid('Develop', 'InMarket', 'Recycled').required(),
+    propertyReferenceNumber: Joi.string().required(),
+    propertyHeldInfos: Joi.array().items(infoSchema.heldInfo).required(),
+    propertyAddress: Joi.string().required(),
+    propertyChineseAddress: Joi.string().required(),
+    propertyShareOfTheLocation: Joi.string().required(),
+    propertyRemarks: Joi.array().items(Joi.string()).required(),
+    transactionHistory: Joi.array().items(infoSchema.transaction).required(),
+    deedsPendingRegistration: Joi.array().items(infoSchema.transaction).required(),
+    deedsPendingRegistrationRejected: Joi.array().items(infoSchema.transaction).required(),
+    incumbranceHistory: Joi.array().items(infoSchema.incumbrance).required(),
+    incumbrancePendingRegistration: Joi.array().items(infoSchema.incumbrance).required(),
+    incumbrancePendingRegistrationRejected: Joi.array().items(infoSchema.incumbrance).required(),
+  }),
+};
 
 export const landAssetsRouter = express.Router();
 function requireMSPPermission(mspId: string) {
@@ -237,23 +317,13 @@ landAssetsRouter.post('/get/:assetId', async (req: Request, res: Response) => {
 
 landAssetsRouter.post(
   '/create',
-  // body().isObject().withMessage('body must contain an asset object'),
-  // body('ID', 'must be a string').notEmpty(),
-  // body('Color', 'must be a string').notEmpty(),
-  // body('Size', 'must be a number').isNumeric(),
-  // body('Owner', 'must be a string').notEmpty(),
-  // body('AppraisedValue', 'must be a number').isNumeric(),
   async (req: Request, res: Response) => {
     logger.debug(req.body, 'Create asset request received');
 
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
+    const { error } = schema.createAsset.validate(req.body);
+    if (error) {
       return res.status(BAD_REQUEST).json({
-        status: getReasonPhrase(BAD_REQUEST),
-        reason: 'VALIDATION_ERROR',
-        message: 'Invalid request body',
-        timestamp: new Date().toISOString(),
-        errors: errors.array(),
+        error: error,
       });
     }
 
@@ -306,15 +376,15 @@ landAssetsRouter.post(
 
 landAssetsRouter.post(
   '/update/:assetId',
-  // body().isObject().withMessage('body must contain an asset object'),
-  // body('ID', 'must be a string').notEmpty(),
-  // body('Color', 'must be a string').notEmpty(),
-  // body('Size', 'must be a number').isNumeric(),
-  // body('Owner', 'must be a string').notEmpty(),
-  // body('AppraisedValue', 'must be a number').isNumeric(),
   async (req: Request, res: Response) => {
     logger.debug(req.body, 'Update asset request received');
 
+    const { error } = schema.updateAsset.validate(req.body);
+    if (error) {
+      return res.status(BAD_REQUEST).json({
+        error: error,
+      });
+    }
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(BAD_REQUEST).json({
