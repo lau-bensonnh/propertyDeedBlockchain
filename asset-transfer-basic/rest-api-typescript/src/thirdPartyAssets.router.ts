@@ -175,12 +175,9 @@ thirdPartyAssetsRouter.post('/incumbrance/submit/:assetId', async (req: Request,
       submittedAt: new Date().getTime(),
       submittedBy: mspId,
     };
-    //  const incumbrancePendingRegistration = asset.incumbrancePendingRegistration.push(incumbrance);
-    // const updateAsset = { ...asset, version: asset.version + 1, incumbrancePendingRegistration: incumbrancePendingRegistration };
-    console.log('asset', asset);
-    const incumbrances: object[] = _.isArray(asset.incumbrancePendingRegistration) ? asset.incumbrancePendingRegistration || [] : [];
+    const incumbrances: object[] = _.isArray(asset.incumbrancePendingRegistration) ? asset.incumbrancePendingRegistration : [];
     incumbrances.push(incumbrance);
-    const updateAsset = { ...asset, version: asset.version + 1, incumbrancePendingRegistration: incumbrance };
+    const updateAsset = { ...asset, version: asset.version + 1, incumbrancePendingRegistration: incumbrances };
 
     const submitQueue = req.app.locals.jobq as Queue;
     const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'UpdateAsset', assetId, JSON.stringify(updateAsset));

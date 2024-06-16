@@ -29,10 +29,41 @@ import { evatuateTransaction } from './fabric';
 import { addSubmitTransactionJob } from './jobs';
 import { logger } from './logger';
 import { Asset } from './asset';
+import _ from 'lodash';
 
 const { ACCEPTED, BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } = StatusCodes;
 
 export const landAssetsRouter = express.Router();
+function requireMSPPermission(mspId: string) {
+  if (mspId === 'Org1MSP') {
+    return true;
+  }
+  return false;
+}
+function patchAssetIfItemIsNotArray(asset: any) {
+  if (!asset) {
+    throw new Error('Asset is not an object');
+  }
+
+  if (!_.isArray(asset.incumbrancePendingRegistration)) {
+    asset.incumbrancePendingRegistration = [];
+  }
+  if (!_.isArray(asset.incumbranceHistory)) {
+    asset.incumbranceHistory = [];
+  }
+  if (!_.isArray(asset.incumbrancePendingRegistrationRejected)) {
+    asset.incumbrancePendingRegistrationRejected = [];
+  }
+  if (!_.isArray(asset.deedsPendingRegistration)) {
+    asset.deedsPendingRegistration = [];
+  }
+  if (!_.isArray(asset.deedsPendingRegistrationRejected)) {
+    asset.deedsPendingRegistrationRejected = [];
+  }
+  if (!_.isArray(asset.transactionHistory)) {
+    asset.transactionHistory = [];
+  }
+}
 
 landAssetsRouter.post('/getSummary', async (req: Request, res: Response) => {
   logger.debug('getSummary request received');
@@ -52,7 +83,12 @@ landAssetsRouter.post('/getSummary', async (req: Request, res: Response) => {
 
     const mspId = req.user as string;
     const contract = req.app.locals[mspId]?.assetContract as Contract;
-
+    if (!requireMSPPermission(mspId)) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Permission denied',
+        timestamp: new Date().toISOString(),
+      });
+    }
     const data = await evatuateTransaction(contract, 'GetAllAssets');
     let assets = [];
     if (data.length > 0) {
@@ -93,7 +129,12 @@ landAssetsRouter.post('/list', async (req: Request, res: Response) => {
     const offset = parseInt(req.query.offset || req.body.offset);
     const mspId = req.user as string;
     const contract = req.app.locals[mspId]?.assetContract as Contract;
-
+    if (!requireMSPPermission(mspId)) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Permission denied',
+        timestamp: new Date().toISOString(),
+      });
+    }
     const data = await evatuateTransaction(contract, 'GetAllAssets');
     let assets = [];
     if (data.length > 0) {
@@ -122,11 +163,15 @@ landAssetsRouter.post('/find', async (req: Request, res: Response) => {
     const offset = parseInt(req.query.offset || req.body.offset);
     const propertyReferenceNumber = req.query.propertyReferenceNumber || req.body.propertyReferenceNumber || '';
     const addressFilter = req.query.address || req.body.address || '';
-
-    console.log('/find', propertyReferenceNumber, addressFilter, limit, offset);
+    logger.debug('/find', propertyReferenceNumber, addressFilter, limit, offset);
     const mspId = req.user as string;
     const contract = req.app.locals[mspId]?.assetContract as Contract;
-
+    if (!requireMSPPermission(mspId)) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Permission denied',
+        timestamp: new Date().toISOString(),
+      });
+    }
     const data = await evatuateTransaction(contract, 'GetAllAssets');
 
     let assets = [];
@@ -157,14 +202,18 @@ landAssetsRouter.post('/find', async (req: Request, res: Response) => {
 });
 
 landAssetsRouter.post('/get/:assetId', async (req: Request, res: Response) => {
-  console.log('get asset request received');
   const assetId = req.params.assetId;
   logger.debug('Read asset request received for asset ID %s', assetId);
 
   try {
     const mspId = req.user as string;
     const contract = req.app.locals[mspId]?.assetContract as Contract;
-
+    if (!requireMSPPermission(mspId)) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Permission denied',
+        timestamp: new Date().toISOString(),
+      });
+    }
     const data = await evatuateTransaction(contract, 'ReadAsset', assetId);
     const asset = JSON.parse(data.toString());
 
@@ -210,6 +259,12 @@ landAssetsRouter.post(
 
     const mspId = req.user as string;
     const assetId = req.body.ID;
+    if (!requireMSPPermission(mspId)) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Permission denied',
+        timestamp: new Date().toISOString(),
+      });
+    }
     const asset: Asset = {
       ID: assetId,
       version: 1,
@@ -282,7 +337,12 @@ landAssetsRouter.post(
 
     const mspId = req.user as string;
     const assetId = req.params.assetId;
-
+    if (!requireMSPPermission(mspId)) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Permission denied',
+        timestamp: new Date().toISOString(),
+      });
+    }
     const contract = req.app.locals[mspId]?.assetContract as Contract;
     const data = await evatuateTransaction(contract, 'ReadAsset', assetId);
     const asset = JSON.parse(data.toString());
@@ -329,6 +389,12 @@ landAssetsRouter.post('/delete/:assetId', async (req: Request, res: Response) =>
   const assetId = req.params.assetId;
 
   try {
+    if (!requireMSPPermission(mspId)) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Permission denied',
+        timestamp: new Date().toISOString(),
+      });
+    }
     const submitQueue = req.app.locals.jobq as Queue;
     const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'DeleteAsset', assetId);
 
@@ -339,6 +405,230 @@ landAssetsRouter.post('/delete/:assetId', async (req: Request, res: Response) =>
     });
   } catch (err) {
     logger.error({ err }, 'Error processing delete asset request for asset ID %s', assetId);
+
+    return res.status(INTERNAL_SERVER_ERROR).json({
+      status: getReasonPhrase(INTERNAL_SERVER_ERROR),
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+
+landAssetsRouter.post('/transaction/approve/:assetId/:recordIndex', async (req: Request, res: Response) => {
+  logger.debug(req.body, 'Update asset request received');
+
+  const mspId = req.user as string;
+  const assetId = req.params.assetId;
+  const recordIndex = req.params.recordIndex;
+  try {
+    if (!requireMSPPermission(mspId)) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Permission denied',
+        timestamp: new Date().toISOString(),
+      });
+    }
+    const contract = req.app.locals[mspId]?.assetContract as Contract;
+    const data = await evatuateTransaction(contract, 'ReadAsset', assetId);
+    const asset = JSON.parse(data.toString());
+    patchAssetIfItemIsNotArray(asset);
+    if (asset.deedsPendingRegistration.length <= recordIndex) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Record index out of range',
+        timestamp: new Date().toISOString(),
+      });
+    }
+    const transaction = asset.deedsPendingRegistration[recordIndex];
+    transaction.approvedAt = new Date().toISOString();
+    transaction.approvedBy = mspId;
+    const pendingTransactions = asset.deedsPendingRegistration.splice(recordIndex, 1);
+    asset.transactionHistory.push(transaction);
+
+    const updateAsset = {
+      ...asset,
+      version: asset.version + 1,
+      transactionHistory: asset.transactionHistory,
+      deedsPendingRegistration: pendingTransactions,
+      updatedAt: new Date().toISOString(),
+    };
+
+    const submitQueue = req.app.locals.jobq as Queue;
+    const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'UpdateAsset', assetId, JSON.stringify(updateAsset));
+
+    return res.status(ACCEPTED).json({
+      status: getReasonPhrase(ACCEPTED),
+      jobId: jobId,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) {
+    logger.error({ err }, 'Error processing update asset request for asset ID %s', assetId);
+
+    return res.status(INTERNAL_SERVER_ERROR).json({
+      status: getReasonPhrase(INTERNAL_SERVER_ERROR),
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+
+landAssetsRouter.post('/transaction/reject/:assetId/:recordIndex', async (req: Request, res: Response) => {
+  logger.debug(req.body, 'Update asset request received');
+
+  const mspId = req.user as string;
+  const assetId = req.params.assetId;
+  const recordIndex = req.params.recordIndex;
+  try {
+    if (!requireMSPPermission(mspId)) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Permission denied',
+        timestamp: new Date().toISOString(),
+      });
+    }
+    const contract = req.app.locals[mspId]?.assetContract as Contract;
+    const data = await evatuateTransaction(contract, 'ReadAsset', assetId);
+    const asset = JSON.parse(data.toString());
+    patchAssetIfItemIsNotArray(asset);
+    if (asset.deedsPendingRegistration.length <= recordIndex) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Record index out of range',
+        timestamp: new Date().toISOString(),
+      });
+    }
+    const transaction = asset.deedsPendingRegistration[recordIndex];
+    transaction.rejectedAt = new Date().toISOString();
+    transaction.rejectedBy = mspId;
+    const pendingTransactions = asset.deedsPendingRegistration.splice(recordIndex, 1);
+    asset.deedsPendingRegistrationRejected.push(transaction);
+    // let transactionHistory = asset.transactionHistory.push(transaction);
+
+    const updateAsset = {
+      ...asset,
+      version: asset.version + 1,
+      deedsPendingRegistrationRejected: asset.deedsPendingRegistrationRejected,
+      deedsPendingRegistration: pendingTransactions,
+      updatedAt: new Date().toISOString(),
+    };
+
+    const submitQueue = req.app.locals.jobq as Queue;
+    const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'UpdateAsset', assetId, JSON.stringify(updateAsset));
+
+    return res.status(ACCEPTED).json({
+      status: getReasonPhrase(ACCEPTED),
+      jobId: jobId,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) {
+    logger.error({ err }, 'Error processing update asset request for asset ID %s', assetId);
+
+    return res.status(INTERNAL_SERVER_ERROR).json({
+      status: getReasonPhrase(INTERNAL_SERVER_ERROR),
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+landAssetsRouter.post('/incumbrance/approve/:assetId/:recordIndex', async (req: Request, res: Response) => {
+  logger.debug(req.body, 'Update asset request received');
+
+  const mspId = req.user as string;
+  const assetId = req.params.assetId;
+  const recordIndex = req.params.recordIndex;
+  try {
+    if (!requireMSPPermission(mspId)) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Permission denied',
+        timestamp: new Date().toISOString(),
+      });
+    }
+    const contract = req.app.locals[mspId]?.assetContract as Contract;
+    const data = await evatuateTransaction(contract, 'ReadAsset', assetId);
+    const asset = JSON.parse(data.toString());
+    patchAssetIfItemIsNotArray(asset);
+    if (asset.incumbrancePendingRegistration.length <= recordIndex) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Record index out of range',
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const incumbrance = asset.incumbrancePendingRegistration[recordIndex];
+
+    incumbrance.approvedAt = new Date().toISOString();
+    incumbrance.approvedBy = mspId;
+    const incumbrancePendingRegistration = asset.incumbrancePendingRegistration.splice(recordIndex, 1);
+    asset.incumbranceHistory.push(incumbrance);
+
+    const updateAsset = {
+      ...asset,
+      version: asset.version + 1,
+      incumbranceHistory: asset.incumbranceHistory,
+      incumbrancePendingRegistration: incumbrancePendingRegistration,
+      updatedAt: new Date().toISOString(),
+    };
+
+    const submitQueue = req.app.locals.jobq as Queue;
+    const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'UpdateAsset', assetId, JSON.stringify(updateAsset));
+
+    return res.status(ACCEPTED).json({
+      status: getReasonPhrase(ACCEPTED),
+      jobId: jobId,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) {
+    logger.error({ err }, 'Error processing update asset request for asset ID %s', assetId);
+
+    return res.status(INTERNAL_SERVER_ERROR).json({
+      status: getReasonPhrase(INTERNAL_SERVER_ERROR),
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+
+landAssetsRouter.post('/incumbrance/reject/:assetId/:recordIndex', async (req: Request, res: Response) => {
+  logger.debug(req.body, 'Update asset request received');
+
+  const mspId = req.user as string;
+  const assetId = req.params.assetId;
+  const recordIndex = req.params.recordIndex;
+  try {
+    if (!requireMSPPermission(mspId)) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Permission denied',
+        timestamp: new Date().toISOString(),
+      });
+    }
+    const contract = req.app.locals[mspId]?.assetContract as Contract;
+    const data = await evatuateTransaction(contract, 'ReadAsset', assetId);
+    const asset = JSON.parse(data.toString());
+    patchAssetIfItemIsNotArray(asset);
+
+    if (asset.incumbrancePendingRegistration.length <= recordIndex) {
+      return res.status(BAD_REQUEST).json({
+        message: 'Record index out of range',
+        timestamp: new Date().toISOString(),
+      });
+    }
+    const incumbrance = asset.incumbrancePendingRegistration[recordIndex];
+
+    incumbrance.rejectedAt = new Date().toISOString();
+    incumbrance.rejectedBy = mspId;
+    const incumbrancePendingRegistration = asset.incumbrancePendingRegistration.splice(recordIndex, 1);
+    asset.incumbrancePendingRegistrationRejected.push(incumbrance);
+
+    const updateAsset = {
+      ...asset,
+      version: asset.version + 1,
+      incumbrancePendingRegistrationRejected: asset.incumbrancePendingRegistrationRejected,
+      incumbrancePendingRegistration: incumbrancePendingRegistration,
+      updatedAt: new Date().toISOString(),
+    };
+
+    const submitQueue = req.app.locals.jobq as Queue;
+    const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'UpdateAsset', assetId, JSON.stringify(updateAsset));
+
+    return res.status(ACCEPTED).json({
+      status: getReasonPhrase(ACCEPTED),
+      jobId: jobId,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) {
+    logger.error({ err }, 'Error processing update asset request for asset ID %s', assetId);
 
     return res.status(INTERNAL_SERVER_ERROR).json({
       status: getReasonPhrase(INTERNAL_SERVER_ERROR),
