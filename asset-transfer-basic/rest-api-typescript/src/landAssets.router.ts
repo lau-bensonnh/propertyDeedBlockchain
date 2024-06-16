@@ -439,14 +439,14 @@ landAssetsRouter.post('/transaction/approve/:assetId/:recordIndex', async (req: 
     const transaction = asset.deedsPendingRegistration[recordIndex];
     transaction.approvedAt = new Date().toISOString();
     transaction.approvedBy = mspId;
-    const pendingTransactions = asset.deedsPendingRegistration.splice(recordIndex, 1);
+    asset.deedsPendingRegistration.splice(recordIndex, 1);
     asset.transactionHistory.push(transaction);
 
     const updateAsset = {
       ...asset,
       version: asset.version + 1,
       transactionHistory: asset.transactionHistory,
-      deedsPendingRegistration: pendingTransactions,
+      deedsPendingRegistration: asset.deedsPendingRegistration,
       updatedAt: new Date().toISOString(),
     };
 
@@ -494,15 +494,14 @@ landAssetsRouter.post('/transaction/reject/:assetId/:recordIndex', async (req: R
     const transaction = asset.deedsPendingRegistration[recordIndex];
     transaction.rejectedAt = new Date().toISOString();
     transaction.rejectedBy = mspId;
-    const pendingTransactions = asset.deedsPendingRegistration.splice(recordIndex, 1);
+    asset.deedsPendingRegistration.splice(recordIndex, 1);
     asset.deedsPendingRegistrationRejected.push(transaction);
-    // let transactionHistory = asset.transactionHistory.push(transaction);
 
     const updateAsset = {
       ...asset,
       version: asset.version + 1,
       deedsPendingRegistrationRejected: asset.deedsPendingRegistrationRejected,
-      deedsPendingRegistration: pendingTransactions,
+      deedsPendingRegistration: asset.deedsPendingRegistration,
       updatedAt: new Date().toISOString(),
     };
 
@@ -551,14 +550,14 @@ landAssetsRouter.post('/incumbrance/approve/:assetId/:recordIndex', async (req: 
 
     incumbrance.approvedAt = new Date().toISOString();
     incumbrance.approvedBy = mspId;
-    const incumbrancePendingRegistration = asset.incumbrancePendingRegistration.splice(recordIndex, 1);
+    asset.incumbrancePendingRegistration.splice(recordIndex, 1);
     asset.incumbranceHistory.push(incumbrance);
 
     const updateAsset = {
       ...asset,
       version: asset.version + 1,
       incumbranceHistory: asset.incumbranceHistory,
-      incumbrancePendingRegistration: incumbrancePendingRegistration,
+      incumbrancePendingRegistration: asset.incumbrancePendingRegistration,
       updatedAt: new Date().toISOString(),
     };
 
@@ -608,14 +607,14 @@ landAssetsRouter.post('/incumbrance/reject/:assetId/:recordIndex', async (req: R
 
     incumbrance.rejectedAt = new Date().toISOString();
     incumbrance.rejectedBy = mspId;
-    const incumbrancePendingRegistration = asset.incumbrancePendingRegistration.splice(recordIndex, 1);
+    asset.incumbrancePendingRegistration.splice(recordIndex, 1);
     asset.incumbrancePendingRegistrationRejected.push(incumbrance);
 
     const updateAsset = {
       ...asset,
       version: asset.version + 1,
       incumbrancePendingRegistrationRejected: asset.incumbrancePendingRegistrationRejected,
-      incumbrancePendingRegistration: incumbrancePendingRegistration,
+      incumbrancePendingRegistration: asset.incumbrancePendingRegistration,
       updatedAt: new Date().toISOString(),
     };
 
