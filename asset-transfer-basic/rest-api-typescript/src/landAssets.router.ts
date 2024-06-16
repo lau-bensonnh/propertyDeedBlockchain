@@ -120,24 +120,25 @@ landAssetsRouter.post('/find', async (req: Request, res: Response) => {
   try {
     const limit = parseInt(req.query.limit || req.body.limit);
     const offset = parseInt(req.query.offset || req.body.offset);
-    const propertyReferenceNumber = req.query.propertyReferenceNumber || '';
-    const addressFilter = req.query.address || '';
+    const propertyReferenceNumber = req.query.propertyReferenceNumber || req.body.propertyReferenceNumber || '';
+    const addressFilter = req.query.address || req.body.address || '';
 
     console.log('/find', propertyReferenceNumber, addressFilter, limit, offset);
     const mspId = req.user as string;
     const contract = req.app.locals[mspId]?.assetContract as Contract;
 
     const data = await evatuateTransaction(contract, 'GetAllAssets');
+
     let assets = [];
     if (data.length > 0) {
       assets = JSON.parse(data.toString());
     }
 
     if (propertyReferenceNumber !== '') {
-      assets = assets.filter((asset: any) => asset.propertyReferenceNumber === propertyReferenceNumber);
+      assets = assets.filter((asset: any) => asset.propertyReferenceNumber.includes(propertyReferenceNumber));
     }
     if (addressFilter !== '') {
-      assets = assets.filter((asset: any) => asset.propertyAddress.includes(addressFilter));
+      assets = assets.filter((asset: any) => asset.propertyAddress.includes(addressFilter) || asset.propertyChineseAddress.includes(addressFilter));
     }
 
     const rows = assets.slice(offset, offset + limit);
