@@ -155,7 +155,7 @@ thirdPartyAssetsRouter.post('/transaction/submit/:assetId', async (req: Request,
       consideration: req.body.consideration,
       remarks: req.body.remarks,
 
-      submittedAt: new Date().getTime(),
+      submittedAt: new Date().toISOString(),
       submittedBy: mspId,
     };
     console.log('asset', asset);
@@ -208,7 +208,7 @@ thirdPartyAssetsRouter.post('/incumbrance/submit/:assetId', async (req: Request,
       consideration: req.body.consideration,
       remarks: req.body.remarks,
 
-      submittedAt: new Date(),
+      submittedAt: new Date().toISOString(),
       submittedBy: mspId,
     };
     const incumbrances: object[] = _.isArray(asset.incumbrancePendingRegistration) ? asset.incumbrancePendingRegistration : [];
