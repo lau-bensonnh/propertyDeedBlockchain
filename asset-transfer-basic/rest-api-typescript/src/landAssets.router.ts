@@ -38,7 +38,6 @@ const ownerSchema = Joi.array()
   .required();
 
 const infoSchema = {
-
   transaction: Joi.object({
     memorialNumber: Joi.string().required(),
     dateOfInstrument: Joi.string().required(),
@@ -67,7 +66,6 @@ const infoSchema = {
     approvedBy: Joi.string().optional(),
     rejectedAt: Joi.date().optional(),
     rejectedBy: Joi.string().optional(),
-
   }),
   heldInfo: Joi.object({
     locationNumber: Joi.string().required(),
@@ -177,11 +175,11 @@ landAssetsRouter.post('/getSummary', async (req: Request, res: Response) => {
 
     for (let i = 0; i < assets.length; i++) {
       const asset = assets[i];
-      if (asset.status === 'Develop') {
+      if (asset.propertyStatus === 'Develop') {
         response.propertyStatus['Develop'] += 1;
-      } else if (asset.status === 'InMarket') {
+      } else if (asset.propertyStatus === 'InMarket') {
         response.propertyStatus['InMarket'] += 1;
-      } else if (asset.status === 'Recycled') {
+      } else if (asset.propertyStatus === 'Recycled') {
         response.propertyStatus['Recycled'] += 1;
       }
       if (asset.deedsPendingRegistration.length > 0) {
@@ -315,142 +313,136 @@ landAssetsRouter.post('/get/:assetId', async (req: Request, res: Response) => {
   }
 });
 
-landAssetsRouter.post(
-  '/create',
-  async (req: Request, res: Response) => {
-    logger.debug(req.body, 'Create asset request received');
+landAssetsRouter.post('/create', async (req: Request, res: Response) => {
+  logger.debug(req.body, 'Create asset request received');
 
-    const { error } = schema.createAsset.validate(req.body);
-    if (error) {
-      return res.status(BAD_REQUEST).json({
-        error: error,
-      });
-    }
-
-    const mspId = req.user as string;
-    const assetId = req.body.ID;
-    if (!requireMSPPermission(mspId)) {
-      return res.status(BAD_REQUEST).json({
-        message: 'Permission denied',
-        timestamp: new Date().toISOString(),
-      });
-    }
-    const asset: Asset = {
-      ID: assetId,
-      version: 1,
-
-      createdMethod: 'Add',
-      propertyStatus: req.body.propertyStatus,
-      propertyReferenceNumber: req.body.propertyReferenceNumber,
-      propertyHeldInfos: req.body.propertyHeldInfos,
-      propertyAddress: req.body.propertyAddress,
-      propertyChineseAddress: req.body.propertyChineseAddress,
-      propertyShareOfTheLocation: req.body.propertyShareOfTheLocation,
-      propertyRemarks: req.body.propertyRemarks,
-      transactionHistory: req.body.transactionHistory,
-      deedsPendingRegistration: req.body.deedsPendingRegistration,
-      deedsPendingRegistrationRejected: req.body.deedsPendingRegistrationRejected,
-      incumbranceHistory: req.body.incumbranceHistory,
-      incumbrancePendingRegistration: req.body.incumbrancePendingRegistration,
-      incumbrancePendingRegistrationRejected: req.body.incumbrancePendingRegistrationRejected,
-    };
-    try {
-      const submitQueue = req.app.locals.jobq as Queue;
-      const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'CreateAsset', assetId, JSON.stringify(asset));
-
-      return res.status(ACCEPTED).json({
-        status: getReasonPhrase(ACCEPTED),
-        jobId: jobId,
-        timestamp: new Date().toISOString(),
-      });
-    } catch (err) {
-      logger.error({ err }, 'Error processing create asset request for asset ID %s', assetId);
-
-      return res.status(INTERNAL_SERVER_ERROR).json({
-        status: getReasonPhrase(INTERNAL_SERVER_ERROR),
-        timestamp: new Date().toISOString(),
-      });
-    }
+  const { error } = schema.createAsset.validate(req.body);
+  if (error) {
+    return res.status(BAD_REQUEST).json({
+      error: error,
+    });
   }
-);
 
-landAssetsRouter.post(
-  '/update/:assetId',
-  async (req: Request, res: Response) => {
-    logger.debug(req.body, 'Update asset request received');
-
-    const { error } = schema.updateAsset.validate(req.body);
-    if (error) {
-      return res.status(BAD_REQUEST).json({
-        error: error,
-      });
-    }
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(BAD_REQUEST).json({
-        status: getReasonPhrase(BAD_REQUEST),
-        reason: 'VALIDATION_ERROR',
-        message: 'Invalid request body',
-        timestamp: new Date().toISOString(),
-        errors: errors.array(),
-      });
-    }
-
-    if (req.params.assetId != req.body.ID) {
-      return res.status(BAD_REQUEST).json({
-        status: getReasonPhrase(BAD_REQUEST),
-        reason: 'ASSET_ID_MISMATCH',
-        message: 'Asset IDs must match',
-        timestamp: new Date().toISOString(),
-      });
-    }
-
-    const mspId = req.user as string;
-    const assetId = req.params.assetId;
-    if (!requireMSPPermission(mspId)) {
-      return res.status(BAD_REQUEST).json({
-        message: 'Permission denied',
-        timestamp: new Date().toISOString(),
-      });
-    }
-    const contract = req.app.locals[mspId]?.assetContract as Contract;
-    const data = await evatuateTransaction(contract, 'ReadAsset', assetId);
-    const asset = JSON.parse(data.toString());
-    const updateFields = {
-      propertyStatus: req.body.propertyStatus,
-      propertyReferenceNumber: req.body.propertyReferenceNumber,
-      propertyHeldInfos: req.body.propertyHeldInfos,
-      propertyAddress: req.body.propertyAddress,
-      propertyChineseAddress: req.body.propertyChineseAddress,
-      propertyShareOfTheLocation: req.body.propertyShareOfTheLocation,
-      propertyRemarks: req.body.propertyRemarks,
-    };
-    const updateAsset = {
-      ...asset,
-      version: asset.version + 1,
-      ...updateFields,
-      updatedAt: new Date().toISOString(),
-    };
-
-    try {
-      const submitQueue = req.app.locals.jobq as Queue;
-      const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'UpdateAsset', assetId, JSON.stringify(updateAsset));
-
-      return res.status(ACCEPTED).json({
-        status: getReasonPhrase(ACCEPTED),
-        jobId: jobId,
-        timestamp: new Date().toISOString(),
-      });
-    } catch (err) {
-      logger.error({ err }, 'Error processing update asset request for asset ID %s', assetId);
-
-      return res.status(INTERNAL_SERVER_ERROR).json({
-        status: getReasonPhrase(INTERNAL_SERVER_ERROR),
-        timestamp: new Date().toISOString(),
-      });
-    }
+  const mspId = req.user as string;
+  const assetId = req.body.ID;
+  if (!requireMSPPermission(mspId)) {
+    return res.status(BAD_REQUEST).json({
+      message: 'Permission denied',
+      timestamp: new Date().toISOString(),
+    });
   }
-);
+  const asset: Asset = {
+    ID: assetId,
+    version: 1,
+
+    createdMethod: 'Add',
+    propertyStatus: req.body.propertyStatus,
+    propertyReferenceNumber: req.body.propertyReferenceNumber,
+    propertyHeldInfos: req.body.propertyHeldInfos,
+    propertyAddress: req.body.propertyAddress,
+    propertyChineseAddress: req.body.propertyChineseAddress,
+    propertyShareOfTheLocation: req.body.propertyShareOfTheLocation,
+    propertyRemarks: req.body.propertyRemarks,
+    transactionHistory: req.body.transactionHistory,
+    deedsPendingRegistration: req.body.deedsPendingRegistration,
+    deedsPendingRegistrationRejected: req.body.deedsPendingRegistrationRejected,
+    incumbranceHistory: req.body.incumbranceHistory,
+    incumbrancePendingRegistration: req.body.incumbrancePendingRegistration,
+    incumbrancePendingRegistrationRejected: req.body.incumbrancePendingRegistrationRejected,
+  };
+  try {
+    const submitQueue = req.app.locals.jobq as Queue;
+    const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'CreateAsset', assetId, JSON.stringify(asset));
+
+    return res.status(ACCEPTED).json({
+      status: getReasonPhrase(ACCEPTED),
+      jobId: jobId,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) {
+    logger.error({ err }, 'Error processing create asset request for asset ID %s', assetId);
+
+    return res.status(INTERNAL_SERVER_ERROR).json({
+      status: getReasonPhrase(INTERNAL_SERVER_ERROR),
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+
+landAssetsRouter.post('/update/:assetId', async (req: Request, res: Response) => {
+  logger.debug(req.body, 'Update asset request received');
+
+  const { error } = schema.updateAsset.validate(req.body);
+  if (error) {
+    return res.status(BAD_REQUEST).json({
+      error: error,
+    });
+  }
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(BAD_REQUEST).json({
+      status: getReasonPhrase(BAD_REQUEST),
+      reason: 'VALIDATION_ERROR',
+      message: 'Invalid request body',
+      timestamp: new Date().toISOString(),
+      errors: errors.array(),
+    });
+  }
+
+  if (req.params.assetId != req.body.ID) {
+    return res.status(BAD_REQUEST).json({
+      status: getReasonPhrase(BAD_REQUEST),
+      reason: 'ASSET_ID_MISMATCH',
+      message: 'Asset IDs must match',
+      timestamp: new Date().toISOString(),
+    });
+  }
+
+  const mspId = req.user as string;
+  const assetId = req.params.assetId;
+  if (!requireMSPPermission(mspId)) {
+    return res.status(BAD_REQUEST).json({
+      message: 'Permission denied',
+      timestamp: new Date().toISOString(),
+    });
+  }
+  const contract = req.app.locals[mspId]?.assetContract as Contract;
+  const data = await evatuateTransaction(contract, 'ReadAsset', assetId);
+  const asset = JSON.parse(data.toString());
+  const updateFields = {
+    propertyStatus: req.body.propertyStatus,
+    propertyReferenceNumber: req.body.propertyReferenceNumber,
+    propertyHeldInfos: req.body.propertyHeldInfos,
+    propertyAddress: req.body.propertyAddress,
+    propertyChineseAddress: req.body.propertyChineseAddress,
+    propertyShareOfTheLocation: req.body.propertyShareOfTheLocation,
+    propertyRemarks: req.body.propertyRemarks,
+  };
+  const updateAsset = {
+    ...asset,
+    version: asset.version + 1,
+    ...updateFields,
+    updatedAt: new Date().toISOString(),
+  };
+
+  try {
+    const submitQueue = req.app.locals.jobq as Queue;
+    const jobId = await addSubmitTransactionJob(submitQueue, mspId, 'UpdateAsset', assetId, JSON.stringify(updateAsset));
+
+    return res.status(ACCEPTED).json({
+      status: getReasonPhrase(ACCEPTED),
+      jobId: jobId,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) {
+    logger.error({ err }, 'Error processing update asset request for asset ID %s', assetId);
+
+    return res.status(INTERNAL_SERVER_ERROR).json({
+      status: getReasonPhrase(INTERNAL_SERVER_ERROR),
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
 
 landAssetsRouter.post('/delete/:assetId', async (req: Request, res: Response) => {
   logger.debug(req.body, 'Delete asset request received');
