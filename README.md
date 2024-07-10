@@ -95,7 +95,7 @@ tree -d -L 3
 brew install go@1.22.5
 ```
 
-- install fabric
+- download fabric sample, Docker images and binaries
 
 ```
 mkdir -p $HOME/go/src/github.com/lau-bensonnh
