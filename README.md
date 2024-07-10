@@ -86,9 +86,6 @@ tree -d -L 3
 
 ### install go/fabric/nodejs
 
-<!-- TODO -->
-<!-- install fabric,go,nodejs 22 -->
-
 - install Go (prerequisite)
 
 ```
