@@ -89,6 +89,31 @@ tree -d -L 3
 <!-- TODO -->
 <!-- install fabric,go,nodejs 22 -->
 
+- install go (prerequisite)
+
+```
+brew install go@1.22.5
+mkdir -p $HOME/go/src/github.com/<your_github_userid>
+cd $HOME/go/src/github.com/<your_github_userid>
+curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/install-fabric.sh && chmod +x install-fabric.sh
+./install-fabric.sh docker samples binary
+```
+
+- install fabric
+
+```
+mkdir -p $HOME/go/src/github.com/<your_github_userid>
+cd $HOME/go/src/github.com/<your_github_userid>
+curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/install-fabric.sh && chmod +x install-fabric.sh
+./install-fabric.sh docker samples binary
+```
+
+- install nodejs 22
+
+```
+brew install node@22
+```
+
 ### setup global variable
 
 - setup .zshrc , modify the path for the location of the fabric sample path & test network path
