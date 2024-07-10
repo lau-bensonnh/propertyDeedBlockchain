@@ -84,31 +84,27 @@ tree -d -L 3
 
 ## installation menu / operator menu
 
-### install fabric/go/nodejs
+### install go/fabric/nodejs
 
 <!-- TODO -->
 <!-- install fabric,go,nodejs 22 -->
 
-- install go (prerequisite)
+- install Go (prerequisite)
 
 ```
 brew install go@1.22.5
-mkdir -p $HOME/go/src/github.com/<your_github_userid>
-cd $HOME/go/src/github.com/<your_github_userid>
-curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/install-fabric.sh && chmod +x install-fabric.sh
-./install-fabric.sh docker samples binary
 ```
 
 - install fabric
 
 ```
-mkdir -p $HOME/go/src/github.com/<your_github_userid>
-cd $HOME/go/src/github.com/<your_github_userid>
+mkdir -p $HOME/go/src/github.com/lau-bensonnh
+cd $HOME/go/src/github.com/lau-bensonnh
 curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/install-fabric.sh && chmod +x install-fabric.sh
 ./install-fabric.sh docker samples binary
 ```
 
-- install nodejs 22
+- install Node.js v22
 
 ```
 brew install node@22
@@ -120,7 +116,7 @@ brew install node@22
 
 ```
 cat ~/.zshrc
-export PATH=~/go/src/github.com/tszhin/fabric-samples/bin:$PATH
+export PATH=~/go/src/github.com/lau-bensonnh/fabric-samples/bin:$PATH
 export TEST_NETWORK_HOME=~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/test-network
 export PATH=~/go/bin:$PATH
 ```
