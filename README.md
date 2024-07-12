@@ -95,8 +95,8 @@ brew install go@1.22.5
 - download fabric sample, Docker images and binaries
 
 ```
-mkdir -p $HOME/go/src/github.com/lau-bensonnh
-cd $HOME/go/src/github.com/lau-bensonnh
+mkdir -p $HOME/go/src/github.com/<your_github_userid>
+cd $HOME/go/src/github.com/<your_github_userid>
 curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/install-fabric.sh && chmod +x install-fabric.sh
 ./install-fabric.sh docker samples binary
 ```
@@ -113,8 +113,8 @@ brew install node@22
 
 ```
 cat ~/.zshrc
-export PATH=~/go/src/github.com/lau-bensonnh/fabric-samples/bin:$PATH
-export TEST_NETWORK_HOME=~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/test-network
+export PATH=~/go/src/github.com/<your_github_userid>/fabric-samples/bin:$PATH
+export TEST_NETWORK_HOME=~/go/src/github.com/<your_github_userid>/propertyDeedBlockchain/test-network
 export PATH=~/go/bin:$PATH
 ```
 
@@ -123,7 +123,7 @@ export PATH=~/go/bin:$PATH
 - start the testing network & create channel
 
 ```
-cd ~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/test-network
+cd ~/go/src/github.com/<your_github_userid>/propertyDeedBlockchain/test-network
 ./network.sh up
 ./network.sh up createChannel -c mychannel -ca
 ```
@@ -150,7 +150,7 @@ cd ~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/test-network
 - setup the global variable (TEST_NETWORK_HOME & REDIS_PASSWORD)
 
 ```
-export TEST_NETWORK_HOME=~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/test-network
+export TEST_NETWORK_HOME=~/go/src/github.com/<your_github_userid>/propertyDeedBlockchain/test-network
 export REDIS_PASSWORD=$(uuidgen)
 ```
 
@@ -159,7 +159,7 @@ export REDIS_PASSWORD=$(uuidgen)
 - install the library & generate the API Key from CA cert & restart the redis server & start the rest api server
 
 ```
-cd ~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/asset-transfer-basic/rest-api-typescript
+cd ~/go/src/github.com/<your_github_userid>/propertyDeedBlockchain/asset-transfer-basic/rest-api-typescript
 npm install
 npm run build
 npm run generateEnv
@@ -173,7 +173,7 @@ npm run start:dev
 - prepare the API_KEY
 
 ```console
-cd ~/go/src/github.com/lau-bensonnh/propertyDeedBlockchain/asset-transfer-basic/rest-api-typescript
+cd ~/go/src/github.com/<your_github_userid>/propertyDeedBlockchain/asset-transfer-basic/rest-api-typescript
 SAMPLE_APIKEY=$(grep ORG1_APIKEY .env | cut -d '=' -f 2-)
 echo $SAMPLE_APIKEY
 ```
