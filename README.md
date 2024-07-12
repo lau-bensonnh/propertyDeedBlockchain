@@ -107,7 +107,7 @@ curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/ins
 brew install node@22
 ```
 
-### replace custom folder for the project
+### replace custom code for the project
 
 - download source code
 
