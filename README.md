@@ -107,6 +107,24 @@ curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/ins
 brew install node@22
 ```
 
+### replace custom folder for the project
+
+- download source code
+
+- copy test-network and config folder
+
+```
+cp -R ~/Downloads/propertyDeedBlockchain-main/test-network ~/go/src/github.com/<your_github_userid>/propertyDeedBlockchain
+cp -R ~/Downloads/propertyDeedBlockchain-main/config ~/go/src/github.com/<your_github_userid>/propertyDeedBlockchain
+```
+
+- copy chaincode-typescript and rest-api-typescript folder
+
+```
+cp -R ~/Downloads/propertyDeedBlockchain-main/asset-transfer-basic/chaincode-typescript ~/go/src/github.com/<your_github_userid>/propertyDeedBlockchain/asset-transfer-basic
+cp -R ~/Downloads/propertyDeedBlockchain-main/asset-transfer-basic/rest-api-typescript ~/go/src/github.com/<your_github_userid>/propertyDeedBlockchain/asset-transfer-basic
+```
+
 ### setup global variable
 
 - setup .zshrc , modify the path for the location of the fabric sample path & test network path
