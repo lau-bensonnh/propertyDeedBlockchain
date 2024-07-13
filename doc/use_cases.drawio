@@ -1,163 +1,163 @@
 <mxfile host="65bd71144e">
     <diagram id="cl0CfTjVMR8A6lklpuig" name="Use Case 3">
-        <mxGraphModel dx="575" dy="591" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1158" dy="592" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="2" value="3rd Party" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="2" value="3rd Party" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
                     <mxGeometry x="130" y="110" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="3" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" target="2">
+                <mxCell id="3" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;" edge="1" parent="1" target="2">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="190" y="780" as="sourcePoint"/>
                         <mxPoint x="230" y="210" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="4" value="Land Dept" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="4" value="Land Dept" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
                     <mxGeometry x="340" y="110" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="5" value="API End Point" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="5" value="API End Point" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
                     <mxGeometry x="540" y="110" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="6" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1">
+                <mxCell id="6" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="400" y="780" as="sourcePoint"/>
                         <mxPoint x="399.5" y="170" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="7" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1">
+                <mxCell id="7" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="600" y="780" as="sourcePoint"/>
                         <mxPoint x="599.5" y="170" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="9" value="&lt;span style=&quot;color: rgb(240, 240, 240); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(42, 37, 47); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 0: Init Assets (Create Asset)&lt;/span&gt;" style="endArrow=classic;html=1;" edge="1" parent="1">
+                <mxCell id="9" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 0: Init Assets (Create Asset)&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="400" y="210" as="sourcePoint"/>
                         <mxPoint x="600" y="210" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="10" value="Ack" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1">
+                <mxCell id="10" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="600" y="230" as="sourcePoint"/>
                         <mxPoint x="400" y="230" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="12" value="&lt;meta charset=&quot;utf-8&quot;&gt;&lt;span style=&quot;color: rgb(240, 240, 240); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(42, 37, 47); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 1: Search Asset&lt;/span&gt;" style="endArrow=classic;html=1;" edge="1" parent="1">
+                <mxCell id="12" value="&lt;meta charset=&quot;utf-8&quot;&gt;&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 1: Search Asset&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="190" y="270" as="sourcePoint"/>
                         <mxPoint x="600" y="270" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="13" value="Ack" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1">
+                <mxCell id="13" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="600" y="290" as="sourcePoint"/>
                         <mxPoint x="190" y="290" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="21" value="&lt;span style=&quot;color: rgb(240, 240, 240); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(42, 37, 47); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 2: Submit Asset Incubrance&lt;/span&gt;" style="endArrow=classic;html=1;" edge="1" parent="1">
+                <mxCell id="21" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 2: Submit Asset Incubrance&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="190" y="320" as="sourcePoint"/>
                         <mxPoint x="600" y="320" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="22" value="Ack" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1">
+                <mxCell id="22" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="600" y="340" as="sourcePoint"/>
                         <mxPoint x="190" y="340" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="23" value="&lt;span style=&quot;color: rgb(240, 240, 240); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(42, 37, 47); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 3: View Asset (incubrance in pending)&lt;/span&gt;" style="endArrow=classic;html=1;" edge="1" parent="1">
+                <mxCell id="23" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 3: View Asset (incubrance in pending)&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="190" y="360" as="sourcePoint"/>
                         <mxPoint x="600" y="360" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="24" value="Ack" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1">
+                <mxCell id="24" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="600" y="380" as="sourcePoint"/>
                         <mxPoint x="190" y="380" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="27" value="&lt;span style=&quot;color: rgb(240, 240, 240); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(42, 37, 47); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 4: View Summary&lt;/span&gt;" style="endArrow=classic;html=1;" edge="1" parent="1">
+                <mxCell id="27" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 4: View Summary&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="399" y="410" as="sourcePoint"/>
                         <mxPoint x="599" y="410" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="28" value="Ack" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1">
+                <mxCell id="28" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="599" y="430" as="sourcePoint"/>
                         <mxPoint x="399" y="430" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="29" value="&lt;span style=&quot;color: rgb(240, 240, 240); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(42, 37, 47); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 6: View Asset Details&lt;/span&gt;" style="endArrow=classic;html=1;" edge="1" parent="1">
+                <mxCell id="29" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 6: View Asset Details&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="399" y="520" as="sourcePoint"/>
                         <mxPoint x="599" y="520" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="30" value="Ack" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1">
+                <mxCell id="30" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="599" y="540" as="sourcePoint"/>
                         <mxPoint x="399" y="540" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="31" value="&lt;span style=&quot;color: rgb(240, 240, 240); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(42, 37, 47); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 7: Approve / Reject incubrance&lt;/span&gt;" style="endArrow=classic;html=1;" edge="1" parent="1">
+                <mxCell id="31" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 7: Approve / Reject incubrance&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="399" y="574" as="sourcePoint"/>
                         <mxPoint x="599" y="574" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="32" value="Ack" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1">
+                <mxCell id="32" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="599" y="594" as="sourcePoint"/>
                         <mxPoint x="399" y="594" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="33" value="&lt;span style=&quot;color: rgb(240, 240, 240); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(42, 37, 47); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 9: View Summary&lt;/span&gt;" style="endArrow=classic;html=1;" edge="1" parent="1">
+                <mxCell id="33" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 9: View Summary&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="399" y="680" as="sourcePoint"/>
                         <mxPoint x="599" y="680" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="34" value="Ack" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1">
+                <mxCell id="34" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="599" y="700" as="sourcePoint"/>
                         <mxPoint x="399" y="700" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="35" value="&lt;span style=&quot;color: rgb(240, 240, 240); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(42, 37, 47); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 8: View Asset Details&lt;/span&gt;" style="endArrow=classic;html=1;" edge="1" parent="1">
+                <mxCell id="35" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 8: View Asset Details&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="399" y="630" as="sourcePoint"/>
                         <mxPoint x="599" y="630" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="36" value="Ack" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1">
+                <mxCell id="36" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="599" y="650" as="sourcePoint"/>
                         <mxPoint x="399" y="650" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="37" value="&lt;span style=&quot;color: rgb(240, 240, 240); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(42, 37, 47); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 10: View Asset (incubrance stored in history)&lt;/span&gt;" style="endArrow=classic;html=1;" edge="1" parent="1">
+                <mxCell id="37" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 10: View Asset (incubrance stored in history)&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="190" y="730" as="sourcePoint"/>
                         <mxPoint x="600" y="730" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="38" value="Ack" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1">
+                <mxCell id="38" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="600" y="750" as="sourcePoint"/>
                         <mxPoint x="190" y="750" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="39" value="&lt;span style=&quot;color: rgb(240, 240, 240); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(42, 37, 47); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 5: View Asset&lt;/span&gt;" style="endArrow=classic;html=1;" edge="1" parent="1">
+                <mxCell id="39" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 5: View Asset&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="400" y="460" as="sourcePoint"/>
                         <mxPoint x="600" y="460" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="40" value="Ack" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1">
+                <mxCell id="40" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="600" y="480" as="sourcePoint"/>
                         <mxPoint x="400" y="480" as="targetPoint"/>
