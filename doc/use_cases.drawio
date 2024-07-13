@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Use Case 1" id="wjLWhG9O7BXnUjjR1Xia">
-        <mxGraphModel dx="1158" dy="592" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="733" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="QaKN9XaU45FM20FiXpmv-0"/>
                 <mxCell id="QaKN9XaU45FM20FiXpmv-1" parent="QaKN9XaU45FM20FiXpmv-0"/>
@@ -587,7 +587,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="Use Case 5" id="xYvSlphusHpM2p-dnpb5">
-        <mxGraphModel dx="1158" dy="592" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="733" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="wY1vuQGvffvG_rC0GIQ6-0"/>
                 <mxCell id="wY1vuQGvffvG_rC0GIQ6-1" parent="wY1vuQGvffvG_rC0GIQ6-0"/>
@@ -667,6 +667,107 @@
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="601" y="280" as="sourcePoint"/>
                         <mxPoint x="401" y="280" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="eQBW882wiTWnkoQoBfyX" name="Use Case 6">
+        <mxGraphModel dx="733" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-1" value="Land Dept" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="340" y="110" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-2" value="API End Point" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="540" y="110" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-3" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="530" as="sourcePoint"/>
+                        <mxPoint x="399.5" y="170" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-4" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="600" y="520" as="sourcePoint"/>
+                        <mxPoint x="599.5" y="170" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-5" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 1: List Assets&amp;nbsp;&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="210" as="sourcePoint"/>
+                        <mxPoint x="600" y="210" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-6" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="600" y="230" as="sourcePoint"/>
+                        <mxPoint x="400" y="230" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-7" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 3: List Asset&amp;nbsp;&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="399" y="320" as="sourcePoint"/>
+                        <mxPoint x="599" y="320" as="targetPoint"/>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-8" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="599" y="340" as="sourcePoint"/>
+                        <mxPoint x="399" y="340" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-9" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 4: Create Asset again&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="399" y="374" as="sourcePoint"/>
+                        <mxPoint x="599" y="374" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-10" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="599" y="394" as="sourcePoint"/>
+                        <mxPoint x="399" y="394" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-11" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 5: List Asset&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="399" y="430" as="sourcePoint"/>
+                        <mxPoint x="599" y="430" as="targetPoint"/>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-12" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="599" y="450" as="sourcePoint"/>
+                        <mxPoint x="399" y="450" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-13" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 2: Create Asset&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="260" as="sourcePoint"/>
+                        <mxPoint x="600" y="260" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-14" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="600" y="280" as="sourcePoint"/>
+                        <mxPoint x="400" y="280" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-15" value="&lt;span style=&quot;font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Step 6: Delete Asset(clean up)&lt;/span&gt;" style="endArrow=classic;html=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="480" as="sourcePoint"/>
+                        <mxPoint x="600" y="480" as="targetPoint"/>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="YsHY9ZStOuV9aNkT_vPu-16" value="Ack" style="endArrow=classic;html=1;dashed=1;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=none;verticalAlign=bottom;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="600" y="500" as="sourcePoint"/>
+                        <mxPoint x="400" y="500" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
             </root>

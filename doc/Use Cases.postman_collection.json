@@ -3902,6 +3902,643 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Use Case 6 Create Duplicate Assets",
+			"item": [
+				{
+					"name": "step 1: land dept, list asset",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Api-Key",
+								"value": "{{ORG1_KEY}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"limit\":10,\"offset\":0\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/land/assets/list",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"land",
+								"assets",
+								"list"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "step 1: land dept, list asset",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Api-Key",
+										"value": "{{ORG1_KEY}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"limit\":10,\"offset\":0\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/land/assets/list",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"land",
+										"assets",
+										"list"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "21"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"15-MRRkkxzrgzDmn/raVi/PzXotOgQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 14:36:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"rows\": [],\n    \"count\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "step 2: land dept, create asset",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Api-Key",
+								"value": "{{ORG1_KEY}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ID\": \"asset1\",\n    \"deedsPendingRegistration\": [],\n    \"deedsPendingRegistrationRejected\": [],\n    \"incumbranceHistory\": [],\n    \"incumbrancePendingRegistration\": [],\n    \"incumbrancePendingRegistrationRejected\": [],\n    \"propertyAddress\": \"address aa\",\n    \"propertyChineseAddress\": \"chin address bb\",\n    \"propertyHeldInfos\": [],\n    \"propertyReferenceNumber\": \"PRN0001\",\n    \"propertyRemarks\": [],\n    \"propertyShareOfTheLocation\": \"4/ 200\",\n    \"propertyStatus\": \"Develop\",\n    \"transactionHistory\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/land/assets/create",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"land",
+								"assets",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "step 2: land dept, create asset",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Api-Key",
+										"value": "{{ORG1_KEY}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ID\": \"asset1\",\n    \"deedsPendingRegistration\": [],\n    \"deedsPendingRegistrationRejected\": [],\n    \"incumbranceHistory\": [],\n    \"incumbrancePendingRegistration\": [],\n    \"incumbrancePendingRegistrationRejected\": [],\n    \"propertyAddress\": \"address aa\",\n    \"propertyChineseAddress\": \"chin address bb\",\n    \"propertyHeldInfos\": [],\n    \"propertyReferenceNumber\": \"PRN0001\",\n    \"propertyRemarks\": [],\n    \"propertyShareOfTheLocation\": \"4/ 200\",\n    \"propertyStatus\": \"Develop\",\n    \"transactionHistory\": []\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/land/assets/create",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"land",
+										"assets",
+										"create"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "72"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"48-KsmGCod4IAO7z8gL4S+mWy7dKHU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 14:36:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"Accepted\",\n    \"jobId\": \"4\",\n    \"timestamp\": \"2024-07-13T14:36:50.574Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "step 3: land dept, list asset",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Api-Key",
+								"value": "{{ORG1_KEY}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"limit\":10,\"offset\":0\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/land/assets/list",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"land",
+								"assets",
+								"list"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "step 3: land dept, list asset",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Api-Key",
+										"value": "{{ORG1_KEY}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"limit\":10,\"offset\":0\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/land/assets/list",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"land",
+										"assets",
+										"list"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "563"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"233-Sw/fGX3Mnr5H3hZy7+jphI4Y8mk\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 14:37:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"rows\": [\n        {\n            \"ID\": \"asset1\",\n            \"createdAt\": \"2024-07-13T14:36:50.589Z\",\n            \"createdMethod\": \"Add\",\n            \"deedsPendingRegistration\": [],\n            \"deedsPendingRegistrationRejected\": [],\n            \"incumbranceHistory\": [],\n            \"incumbrancePendingRegistration\": [],\n            \"incumbrancePendingRegistrationRejected\": [],\n            \"propertyAddress\": \"address aa\",\n            \"propertyChineseAddress\": \"chin address bb\",\n            \"propertyHeldInfos\": [],\n            \"propertyReferenceNumber\": \"PRN0001\",\n            \"propertyRemarks\": [],\n            \"propertyShareOfTheLocation\": \"4/ 200\",\n            \"propertyStatus\": \"Develop\",\n            \"transactionHistory\": [],\n            \"updatedAt\": \"2024-07-13T14:36:50.589Z\",\n            \"version\": 1\n        }\n    ],\n    \"count\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "step 4: land dept, create asset again",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Api-Key",
+								"value": "{{ORG1_KEY}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ID\": \"asset1\",\n    \"deedsPendingRegistration\": [],\n    \"deedsPendingRegistrationRejected\": [],\n    \"incumbranceHistory\": [],\n    \"incumbrancePendingRegistration\": [],\n    \"incumbrancePendingRegistrationRejected\": [],\n    \"propertyAddress\": \"address aaa\",\n    \"propertyChineseAddress\": \"chin address bbb\",\n    \"propertyHeldInfos\": [],\n    \"propertyReferenceNumber\": \"PRN0001\",\n    \"propertyRemarks\": [],\n    \"propertyShareOfTheLocation\": \"4/ 200\",\n    \"propertyStatus\": \"Develop\",\n    \"transactionHistory\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/land/assets/create",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"land",
+								"assets",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "step 4: land dept, create asset",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Api-Key",
+										"value": "{{ORG1_KEY}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ID\": \"asset1\",\n    \"deedsPendingRegistration\": [],\n    \"deedsPendingRegistrationRejected\": [],\n    \"incumbranceHistory\": [],\n    \"incumbrancePendingRegistration\": [],\n    \"incumbrancePendingRegistrationRejected\": [],\n    \"propertyAddress\": \"address aaa\",\n    \"propertyChineseAddress\": \"chin address bbb\",\n    \"propertyHeldInfos\": [],\n    \"propertyReferenceNumber\": \"PRN0001\",\n    \"propertyRemarks\": [],\n    \"propertyShareOfTheLocation\": \"4/ 200\",\n    \"propertyStatus\": \"Develop\",\n    \"transactionHistory\": []\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/land/assets/create",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"land",
+										"assets",
+										"create"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "72"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"48-PUG3H2zEQU9Hn1LsfpOaaD3lBXU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 14:37:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"Accepted\",\n    \"jobId\": \"5\",\n    \"timestamp\": \"2024-07-13T14:37:30.225Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "step 5: land dept, list asset",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Api-Key",
+								"value": "{{ORG1_KEY}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"limit\":10,\"offset\":0\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/land/assets/list",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"land",
+								"assets",
+								"list"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "step 5: land dept, list asset",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Api-Key",
+										"value": "{{ORG1_KEY}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"limit\":10,\"offset\":0\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/land/assets/list",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"land",
+										"assets",
+										"list"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "563"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"233-Sw/fGX3Mnr5H3hZy7+jphI4Y8mk\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 14:37:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"rows\": [\n        {\n            \"ID\": \"asset1\",\n            \"createdAt\": \"2024-07-13T14:36:50.589Z\",\n            \"createdMethod\": \"Add\",\n            \"deedsPendingRegistration\": [],\n            \"deedsPendingRegistrationRejected\": [],\n            \"incumbranceHistory\": [],\n            \"incumbrancePendingRegistration\": [],\n            \"incumbrancePendingRegistrationRejected\": [],\n            \"propertyAddress\": \"address aa\",\n            \"propertyChineseAddress\": \"chin address bb\",\n            \"propertyHeldInfos\": [],\n            \"propertyReferenceNumber\": \"PRN0001\",\n            \"propertyRemarks\": [],\n            \"propertyShareOfTheLocation\": \"4/ 200\",\n            \"propertyStatus\": \"Develop\",\n            \"transactionHistory\": [],\n            \"updatedAt\": \"2024-07-13T14:36:50.589Z\",\n            \"version\": 1\n        }\n    ],\n    \"count\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "step 6: land dept, delete asset1 (clean up)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Api-Key",
+								"value": "{{ORG1_KEY}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/land/assets/delete/asset1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"land",
+								"assets",
+								"delete",
+								"asset1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "step 6: land dept, delete asset1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Api-Key",
+										"value": "{{ORG1_KEY}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/land/assets/delete/asset1",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"land",
+										"assets",
+										"delete",
+										"asset1"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "72"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"48-P9d+Lfv3fb2/resWRahZKfHvBUg\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 14:37:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"Accepted\",\n    \"jobId\": \"6\",\n    \"timestamp\": \"2024-07-13T14:37:59.437Z\"\n}"
+						}
+					]
+				}
+			]
 		}
 	]
 }
