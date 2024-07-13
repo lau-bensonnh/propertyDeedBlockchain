@@ -82,7 +82,7 @@ tree -d -L 3
     - fabric.ts - to connect the fabric network with smart contract
     - config.ts - to store the global variable used in the rest api server
 
-## installation menu / operator menu
+## installation menu
 
 ### install go/fabric/nodejs
 
@@ -201,4 +201,26 @@ echo $SAMPLE_APIKEY
 ```
 curl --header "X-Api-Key: ${SAMPLE_APIKEY}" -X POST http://localhost:3000/api/land/assets/getSummary
 curl --header "X-Api-Key: ${SAMPLE_APIKEY}" -X POST http://localhost:3000/api/land/assets/get/asset1000001
+```
+
+## operation menu
+
+### part 1: start fabric network
+
+- start the testing network & create channel
+
+```
+cd ~/go/src/github.com/<your_github_userid>/propertyDeedBlockchain/test-network
+./network.sh up
+```
+
+### part 2: start api server
+
+- restart the redis server & start the rest api server
+
+```
+cd ~/go/src/github.com/<your_github_userid>/propertyDeedBlockchain/asset-transfer-basic/rest-api-typescript
+npm run stop:redis
+npm run start:redis
+npm run start:dev
 ```
